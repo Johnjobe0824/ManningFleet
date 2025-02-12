@@ -9,6 +9,13 @@ const model = ref([
     },  
     {
         // label: 'Master',
+        items: [
+            { label: 'Rank', icon: 'pi pi-fw pi-users', to: '/rank', can:'read rank' },
+            { label: 'Vessel', icon: 'pi pi-fw pi-users', to: '/vessel', can:'read vessel' },
+        ]
+    },
+    {
+        // label: 'Master',
         items: [{ label: 'User', icon: 'pi pi-fw pi-user', to: '/user', can:'read user' }]
     },
     {

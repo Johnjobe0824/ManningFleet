@@ -10,6 +10,8 @@ use App\Http\Controllers\UserController;
 use Spatie\Permission\Models\Permission;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PermissionController;
+use App\Http\Controllers\RankController;
+use App\Http\Controllers\VesselController;
 
 /*
 |--------------------------------------------------------------------------
@@ -43,6 +45,8 @@ Route::middleware('auth', 'verified')->group(function () {
     Route::post('/user/destroy-bulk', [UserController::class, 'destroyBulk'])->name('user.destroy-bulk');
     
     Route::resource('/role', RoleController::class)->except('create', 'show', 'edit');
+    Route::resource('/rank', RankController::class)->except('create', 'show', 'edit');
+    Route::resource('/vessel', VesselController::class)->except('create', 'show', 'edit');
 
     Route::resource('/permission', PermissionController::class)->except('create', 'show', 'edit');
 

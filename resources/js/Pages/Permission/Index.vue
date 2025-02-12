@@ -103,7 +103,7 @@ watch(
                 </Column>
 
                 <Column field="name" header="Name"></Column>
-                <Column field="guard_name" header="Guard"></Column>
+                <!-- <Column field="guard_name" header="Guard"></Column> -->
                 <Column field="created_at" header="Created"></Column>
                 <Column field="updated_at" header="Updated"></Column>
                 <Column :exportable="false" style="min-width: 12rem">
