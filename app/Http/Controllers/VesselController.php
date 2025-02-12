@@ -91,9 +91,21 @@ class VesselController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Vessel $vessel)
+    public function update(VesselUpdateRequest $request, Vessel $vessel)
     {
         //
+        DB::beginTransaction();
+        try {
+            $vessel->update([
+                'vessel_name'          => $request->vessel_name,
+                'type'          => $request->type
+            ]);
+            DB::commit();
+            return back()->with('success', $vessel->vessel_name. ' updated successfully.');
+        } catch (\Throwable $th) {
+            DB::rollback();
+            return back()->with('error', 'Error updating ' .  $th->getMessage());
+        }
     }
 
     /**
@@ -102,5 +114,11 @@ class VesselController extends Controller
     public function destroy(Vessel $vessel)
     {
         //
+        try {
+            $vessel->delete();
+            return back()->with('success', $vessel->vessel_name. ' deleted successfully.');
+        } catch (\Throwable $th) {
+            return back()->with('error', 'Error deleting ' . $vessel->vessel_name . $th->getMessage());
+        }
     }
 }

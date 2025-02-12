@@ -5,7 +5,7 @@ import { watchEffect, reactive } from "vue";
 const props = defineProps({
     show: Boolean,
     title: String,
-    rank: Object,
+    vessel: Object,
     permissions: Object,
 });
 
@@ -16,13 +16,12 @@ const data = reactive({
 const emit = defineEmits(["close"]);
 
 const form = useForm({
-    name: "",
-    // permissions: [],
+    vessel_name: "",
     type: ""
 });
 
 const update = () => {
-    form.put(route("rank.update", props.rank?.id), {
+    form.put(route("vessel.update", props.vessel?.id), {
         preserveScroll: true,
         onSuccess: () => {
             emit("close");
@@ -36,29 +35,30 @@ const update = () => {
 watchEffect(() => {
     if (props.show) {
         form.errors = {};
-        form.name = props.rank?.name;
-        form.type = props.rank?.type;
-        // form.permissions = props.rank.permissions?.map((d) => d.id);
+        form.vessel_name = props.vessel?.vessel_name;
+        form.type = props.vessel?.type;
+        // form.permissions = props.vessel.permissions?.map((d) => d.id);
     }
-    // if (props.permissions.length == props.rank?.permissions.length) {
-    //     data.multipleSelect = true;
-    // } else {
-    //     data.multipleSelect = false;
-    // }
 });
+
+
 
 const types = [
   {
     id: 1,
-    name: "Officer"
+    name: "Patrol ships"
   },
   {
     id: 2,
-    name: "Non-Officer"
+    name: "Service vessel"
   },
   {
     id: 3,
-    name: "NUP-Civilian"
+    name: "Small streamer"
+  },
+  {
+    id: 4,
+    name: "PCG vessel operation"
   }
 ];
 
@@ -88,9 +88,9 @@ const types = [
         <form @submit.prevent="update">
             <div class="flex flex-col gap-4">
                 <div class="flex flex-col gap-2">
-                    <label for="name">Name</label>
-                    <InputText id="name" v-model="form.name" class="flex-auto" autocomplete="off" placeholder="Name" />    
-                    <small v-if="form.errors.name" class="text-red-500">{{ form.errors.name }}</small>  
+                    <label for="vessel_name">Vessel Name</label>
+                    <InputText id="vessel_name" v-model="form.vessel_name" class="flex-auto" autocomplete="off" placeholder="Name" />    
+                    <small v-if="form.errors.vessel_name" class="text-red-500">{{ form.errors.vessel_name }}</small>  
                 </div>
                 <div class="flex flex-col gap-2">
                     <label for="type">Type</label>

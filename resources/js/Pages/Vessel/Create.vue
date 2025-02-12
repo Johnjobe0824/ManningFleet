@@ -82,8 +82,8 @@ watchEffect(() => {
         <form @submit.prevent="create">
             <div class="flex flex-col gap-4">
                 <div class="flex flex-col gap-2">
-                    <label for="name">Vessel Name</label>
-                    <InputText id="name" v-model="form.vessel_name" class="flex-auto" autocomplete="off" placeholder="Name" />    
+                    <label for="vessel_name">Vessel Name</label>
+                    <InputText id="vessel_name" v-model="form.vessel_name" class="flex-auto" autocomplete="off" placeholder="Name" />    
                     <small v-if="form.errors.vessel_name" class="text-red-500">{{ form.errors.vessel_name }}</small>  
                 </div>
                 <div class="flex flex-col gap-2">

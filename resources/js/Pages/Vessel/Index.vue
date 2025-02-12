@@ -124,7 +124,7 @@ watch(
                 <div class="flex items-center gap-4">
                     <i class="pi pi-exclamation-triangle !text-3xl" />
                     <span v-if="data.vessel"
-                        >Are you sure you want to delete <b>{{ data.vessel.name }}</b
+                        >Are you sure you want to delete <b>{{ data.vessel.vessel_name }}</b
                         >?</span
                     >
                 </div>
