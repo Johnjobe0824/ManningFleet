@@ -30,6 +30,12 @@ class UserController extends Controller
     public function index(UserIndexRequest $request)
     {
         $users = User::query();
+
+        // Exclude superadmin users from the query
+        $users->whereDoesntHave('roles', function ($query) {
+            $query->where('name', 'superadmin');
+        });
+
         if ($request->has('search')) {
             $users->where('name', 'LIKE', "%" . $request->search . "%");
             $users->orWhere('email', 'LIKE', "%" . $request->search . "%");

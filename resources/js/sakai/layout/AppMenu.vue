@@ -25,16 +25,15 @@ const model = ref([
             { label: 'Permission', icon: 'pi pi-fw pi-mobile', to: '/permission', class: 'rotated-icon', can:'read permission' },
         ]
     },
-    // {
-    //     items: [
-    //         {
-    //             label: 'Template Source',
-    //             icon: 'pi pi-fw pi-github',
-    //             url: 'https://sakai.primevue.org/',
-    //             target: '_blank'
-    //         }
-    //     ]
-    // }
+    {
+        items: [
+            {
+                label: 'Personnel',
+                icon: 'pi pi-fw pi-github',
+                to: '/personnel'
+            }
+        ]
+    }
 ]);
 </script>
 

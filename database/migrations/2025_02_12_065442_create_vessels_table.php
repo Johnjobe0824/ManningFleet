@@ -17,7 +17,10 @@ return new class extends Migration
         Schema::create('vessels', function (Blueprint $table) {
             $table->id();
             $table->string('vessel_name');
-            $table->enum('type', [Vessel::PT, Vessel::SV, Vessel::ST, Vessel::VO])->default(Vessel::VO);
+            $table->string('vessel_bow_no')->unique();
+            $table->enum('category', [Vessel::I, Vessel::II, Vessel::III])->default(Vessel::I);
+            $table->enum('status', [Vessel::RFS, Vessel::NRFS])->default(Vessel::NRFS);
+            $table->string('size');
             $table->softDeletes(); 
             $table->timestamps();
         });

@@ -2,7 +2,7 @@
 
 <template>
     <div class="layout-footer">
-        CGFleet Manning Group System by
-        <a href="#" target="_blank" rel="noopener noreferrer" class="text-primary font-bold hover:underline">CGWCEISC</a>
+        Powered by
+        <a href="#" target="_blank" rel="noopener noreferrer" class="text-primary font-bold hover:underline">CGIS - Information System Group @ 2025</a>
     </div>
 </template>

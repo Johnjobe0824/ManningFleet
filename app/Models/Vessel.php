@@ -10,14 +10,19 @@ class Vessel extends Model
 {
     use HasFactory, SoftDeletes;
 
-    const PT = 'Patrol ships';
-    const SV = 'Service vessel';
-    const ST = 'Small streamer';
-    const VO = 'PCG vessel operation';
+    const I = 'Category I';
+    const II = 'Category II';
+    const III = 'Category III';
+
+    const RFS = "Ready For Sea";
+    const NRFS = "Not Ready For Sea";
 
     protected $fillable = [
         'vessel_name',
-        'type'
+        'vessel_bow_no',
+        'category',
+        'size',
+        'status'
     ];
 
     public function getCreatedAtAttribute()

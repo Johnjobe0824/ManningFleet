@@ -1,6 +1,6 @@
 <script setup>
 import { useForm } from "@inertiajs/vue3";
-import { watchEffect, reactive } from "vue";
+import { watchEffect, reactive, onMounted, ref } from "vue";
 
 const props = defineProps({
     show: Boolean,
@@ -16,27 +16,68 @@ const data = reactive({
 
 const form = useForm({
     vessel_name: "",
-    type: ""
+    vessel_bow_no:"",
+    category: "",
+    size:"",
+    status:""
 });
 
-const types = [
+
+const categories = ref([
   {
     id: 1,
-    name: "Patrol ships"
+    name: "Category I"
   },
   {
     id: 2,
-    name: "Service vessel"
+    name: "Category II"
   },
   {
     id: 3,
-    name: "Small streamer"
+    name: "Category III"
+  }
+]);
+
+
+const statuses = [
+  {
+    id: 1,
+    name: "Ready For Sea"
+  },
+  {
+    id: 2,
+    name: "Not Ready For Sea"
+  }
+];
+
+
+const sizes = [
+  {
+    id: 1,
+    name: "24-meter"
+  },
+  {
+    id: 2,
+    name: "35-meter"
+  },
+  {
+    id: 3,
+    name: "44-meter"
   },
   {
     id: 4,
-    name: "PCG vessel operation"
+    name: "56-meter"
+  },
+  {
+    id: 5,
+    name: "83-meter"
+  },
+  {
+    id: 6,
+    name: "97-meter"
   }
 ];
+
 
 
 const create = () => {
@@ -83,30 +124,83 @@ watchEffect(() => {
             <div class="flex flex-col gap-4">
                 <div class="flex flex-col gap-2">
                     <label for="vessel_name">Vessel Name</label>
-                    <InputText id="vessel_name" v-model="form.vessel_name" class="flex-auto" autocomplete="off" placeholder="Name" />    
+                    <InputText id="vessel_name" v-model="form.vessel_name" class="flex-auto" autocomplete="off" placeholder="Vessel Name" />    
                     <small v-if="form.errors.vessel_name" class="text-red-500">{{ form.errors.vessel_name }}</small>  
                 </div>
                 <div class="flex flex-col gap-2">
-                    <label for="type">Type</label>
+                    <label for="vessel_bow_no">Vessel Bow No</label>
+                    <InputText id="vessel_bow_no" v-model="form.vessel_bow_no" class="flex-auto" autocomplete="off" placeholder="Vessel Bow No" />    
+                    <small v-if="form.errors.vessel_bow_no" class="text-red-500">{{ form.errors.vessel_bow_no }}</small>  
+                </div>
+                <div class="flex flex-col gap-2">
+                    <!-- <div class="font-semibold text-xl">Select</div> -->
+                     <label for="category">Category</label>
+                    <Select v-model="form.category" :options="categories" optionLabel="name" optionValue="name" placeholder="Select category" />
+                   
+
                     <!-- <InputText id="type" v-model="form.type" class="flex-auto" autocomplete="off" placeholder="Type" />   -->
                     
-                        <select
-                        v-model="form.type"
+                        <!-- <select
+                        v-model="form.category"
+                        id="id"
+                        class="flex-auto relative z-20 w-full appearance-none rounded border border-stroke bg-transparent py-3 px-5 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
+                        :class="{
+                            ' text-red-900 focus:ring-red-500 focus:border-red-500 border-red-300'
+                            :form.errors.category
+                        }"
+                    >
+                        <option value="" disabled selected>Select Category</option>
+                        <option 
+                            v-for="item in categories" :key="item.id"
+                            :value="item.name">
+                            {{ item.name }}
+                        </option>
+                    </select> -->
+                    <small v-if="form.errors.category" class="text-red-500">{{ form.errors.category }}</small>  
+                </div>
+                <div class="flex flex-col gap-2">
+                    <label for="size">Size</label>
+                    <!-- <InputText id="type" v-model="form.type" class="flex-auto" autocomplete="off" placeholder="Type" />   -->
+                    <Select v-model="form.size" :options="sizes" optionLabel="name" optionValue="name" placeholder="Select size" />
+                        <!-- <select
+                        v-model="form.size"
                         id="id"
                         class="relative z-20 w-full appearance-none rounded border border-stroke bg-transparent py-3 px-5 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
                         :class="{
                             ' text-red-900 focus:ring-red-500 focus:border-red-500 border-red-300'
-                            :form.errors.type
+                            :form.errors.size
                         }"
                     >
-                        <option value="" disabled selected>Select Type</option>
+                        <option value="" disabled selected>Select Size</option>
                         <option 
-                            v-for="item in types" :key="item.id"
+                            v-for="item in sizes" :key="item.id"
                             :value="item.name">
                             {{ item.name }}
                         </option>
-                    </select>
-                    <small v-if="form.errors.type" class="text-red-500">{{ form.errors.type }}</small>  
+                    </select> -->
+                    <small v-if="form.errors.size" class="text-red-500">{{ form.errors.size }}</small>  
+                </div>
+                <div class="flex flex-col gap-2">
+                    <label for="status">Status</label>
+                    <!-- <InputText id="type" v-model="form.type" class="flex-auto" autocomplete="off" placeholder="Type" />   -->
+                    <Select v-model="form.status" :options="statuses" optionLabel="name" optionValue="name" placeholder="Select status" />
+                        <!-- <select
+                        v-model="form.status"
+                        id="id"
+                        class="relative z-20 w-full appearance-none rounded border border-stroke bg-transparent py-3 px-5 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
+                        :class="{
+                            ' text-red-900 focus:ring-red-500 focus:border-red-500 border-red-300'
+                            :form.errors.status
+                        }"
+                    >
+                        <option value="" disabled selected>Select Status</option>
+                        <option 
+                            v-for="item in statuses" :key="item.id"
+                            :value="item.name">
+                            {{ item.name }}
+                        </option>
+                    </select> -->
+                    <small v-if="form.errors.status" class="text-red-500">{{ form.errors.status }}</small>  
                 </div>
                 <!-- <div class="flex flex-col">
                     <label for="permissions">Permissions</label>

@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Models\Vessel;
 use Illuminate\Foundation\Http\FormRequest;
 
 class VesselStoreRequest extends FormRequest
@@ -22,7 +23,11 @@ class VesselStoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'vessel_name' => 'required|string|max:255',
+            'vessel_bow_no' => 'required|string|max:255|unique:vessels',
+            'category' => 'required|string|max:255',
+            'size' => 'required|string|max:255',
+            'status' => 'required|string|max:255',
         ];
     }
 }

@@ -50,19 +50,25 @@ Route::middleware('auth', 'verified')->group(function () {
 
     Route::resource('/permission', PermissionController::class)->except('create', 'show', 'edit');
 
+    Route::get('/personnel', function () {
+    return Inertia::render('Personnel/Index');
 });
 
-Route::get('/form', function () {
-    return Inertia::render('SakaiForm');
 });
 
-Route::get('/button', function () {
-    return Inertia::render('SakaiButton');
-});
 
-Route::get('/list', function () {
-    return Inertia::render('SakaiList');
-});
+
+// Route::get('/form', function () {
+//     return Inertia::render('SakaiForm');
+// });
+
+// Route::get('/button', function () {
+//     return Inertia::render('SakaiButton');
+// });
+
+// Route::get('/list', function () {
+//     return Inertia::render('SakaiList');
+// });
 
 // Route::get('/', function () {
 //     return Inertia::render('Welcome', [

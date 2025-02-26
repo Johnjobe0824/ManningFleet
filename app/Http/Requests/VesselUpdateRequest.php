@@ -3,6 +3,8 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
+
 
 class VesselUpdateRequest extends FormRequest
 {
@@ -23,7 +25,16 @@ class VesselUpdateRequest extends FormRequest
     {
         return [
             'vessel_name' => 'required|string|max:255',
-            'type' => 'required|string|max:255',
+            'vessel_bow_no' => [
+                'required',
+                'string',
+                'max:255',
+                Rule::unique('vessels', 'vessel_bow_no')->ignore($this->route('vessel')),
+            ],
+            'category' => 'required|string|max:255',
+            'size' => 'required|string|max:255',
+            'status' => 'required|string|max:255',
         ];
     }
+    
 }

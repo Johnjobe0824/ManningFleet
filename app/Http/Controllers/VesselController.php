@@ -30,7 +30,10 @@ class VesselController extends Controller
         $vessels = Vessel::query();
         if ($request->has('search')) {
             $vessels->where('vessel_name', 'LIKE', "%" . $request->search . "%");
-            $vessels->orWhere('type', 'LIKE', "%" . $request->search . "%");
+            $vessels->orWhere('vessel_bow_no', 'LIKE', "%" . $request->search . "%");
+            $vessels->orWhere('category', 'LIKE', "%" . $request->search . "%");
+            $vessels->orWhere('size', 'LIKE', "%" . $request->search . "%");
+            $vessels->orWhere('status', 'LIKE', "%" . $request->search . "%");
         }
 
         if ($request->has(['field', 'order'])) {
@@ -60,9 +63,14 @@ class VesselController extends Controller
         //
         DB::beginTransaction();
         try {
+
+            
             $vessel = Vessel::create([
-                'vessel_name'          => $request->vessel_name,
-                'type'          => $request->type
+                'vessel_name'   => $request->vessel_name,
+                'vessel_bow_no' => $request->vessel_bow_no,
+                'category'  => $request->category,
+                'size'  => $request->size,
+                'status' => $request->status
             ]);
             DB::commit();
             return back()->with('success', $vessel->vessel_name. ' created successfully.');
@@ -97,14 +105,17 @@ class VesselController extends Controller
         DB::beginTransaction();
         try {
             $vessel->update([
-                'vessel_name'          => $request->vessel_name,
-                'type'          => $request->type
+                'vessel_name'   => $request->vessel_name,
+                'vessel_bow_no' => $request->vessel_bow_no,
+                'category'  => $request->category,
+                'size'  => $request->size,
+                'status' => $request->status
             ]);
             DB::commit();
             return back()->with('success', $vessel->vessel_name. ' updated successfully.');
         } catch (\Throwable $th) {
             DB::rollback();
-            return back()->with('error', 'Error updating ' .  $th->getMessage());
+            return back()->with('error', 'Error updating ' . $vessel->vessel_name. $th->getMessage());
         }
     }
 

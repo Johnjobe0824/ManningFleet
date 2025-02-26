@@ -36,6 +36,19 @@ const data = reactive({
     vessel: null,
 });
 
+const getSeverity = (vessel) => {
+    switch (vessel.status) {
+        case 'Ready For Sea':
+            return 'success';
+
+        case 'Not Ready For Sea':
+            return 'danger';
+
+        default:
+            return null;
+    }
+};
+
 
 const deleteData = () => {
 
@@ -107,9 +120,17 @@ watch(
                 </Column>
 
                 <Column field="vessel_name" header="Vessel Name"></Column>
-                <Column field="type" header="Type"></Column>
-                <Column field="created_at" header="Created"></Column>
-                <Column field="updated_at" header="Updated"></Column>
+                <Column field="vessel_bow_no" header="Vessel Bow No"></Column>
+                <Column field="category" header="Category"></Column>
+                <Column field="size" header="Size"></Column>
+                <!-- <Column field="status" header="Status"></Column> -->
+                <Column header="Status">
+                    <template #body="slotProps">
+                        <Tag :value="slotProps.data.status" :severity="getSeverity(slotProps.data)" />
+                    </template>
+                </Column>
+                <!-- <Column field="created_at" header="Created"></Column>
+                <Column field="updated_at" header="Updated"></Column> -->
                 <Column :exportable="false" style="min-width: 12rem">
                     <template #body="slotProps">
                         <Button v-show="can(['update vessel'])" icon="pi pi-pencil" outlined rounded class="mr-2"  @click="

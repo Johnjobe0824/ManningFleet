@@ -25,6 +25,10 @@ class RoleController extends Controller
     public function index(RoleIndexRequest $request)
     {
         $roles = Role::query();
+
+        // Exclude superadmin role from the query
+         $roles->where('name', '<>', 'superadmin');
+
         if ($request->has('search')) {
             $roles->where('name', 'LIKE', "%" . $request->search . "%");
             $roles->orWhere('guard_name', 'LIKE', "%" . $request->search . "%");

@@ -22,7 +22,7 @@ class VesselIndexRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'field' => ['in:vessel_name,type,created_at,updated_at'],
+            'field' => ['in:vessel_name,vessel_bow_no,category,size,status,created_at,updated_at'],
             'order' => ['in:asc,desc'],
             'perPage' => ['numeric'],
         ];
