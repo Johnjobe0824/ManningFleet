@@ -8,6 +8,10 @@ use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use App\Models\{
+    Role,
+    PersonalInformation
+};
 
 class User extends Authenticatable
 {
@@ -44,6 +48,8 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
+    protected $with = ['personal_info'];
+
     public function getCreatedAtAttribute()
     {
         return date('d-m-Y H:i', strtotime($this->attributes['created_at']));
@@ -65,4 +71,10 @@ class User extends Authenticatable
             return [$pr['name'] => true];
         });
     }
+
+    public function personal_info()
+    {
+        return $this->hasOne(PersonalInformation::class);
+    }
+
 }

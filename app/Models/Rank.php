@@ -5,6 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Models\{
+    PersonalInformation
+};
 
 class Rank extends Model
 {
@@ -28,5 +31,10 @@ class Rank extends Model
     public function getUpdatedAtAttribute()
     {
         return date('d-m-Y H:i', strtotime($this->attributes['updated_at']));
+    }
+
+    public function personal_infos()
+    {
+        return $this->hasMany(PersonalInformation::class);
     }
 }

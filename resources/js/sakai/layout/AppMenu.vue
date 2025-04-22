@@ -28,9 +28,9 @@ const model = ref([
     {
         items: [
             {
-                label: 'Personnel',
-                icon: 'pi pi-fw pi-github',
-                to: '/personnel'
+                label: 'Profile',
+                icon: 'pi pi-fw pi-user',
+                to: '/personal_data'
             }
         ]
     }

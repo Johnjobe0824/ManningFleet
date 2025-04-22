@@ -5,13 +5,17 @@ use Inertia\Inertia;
 use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Application;
-use App\Http\Controllers\RoleController;
-use App\Http\Controllers\UserController;
 use Spatie\Permission\Models\Permission;
-use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\PermissionController;
-use App\Http\Controllers\RankController;
-use App\Http\Controllers\VesselController;
+
+use App\Http\Controllers\{
+    RoleController,
+    UserController,
+    ProfileController,
+    PermissionController,
+    RankController,
+    VesselController,
+    PersonalInformationController
+};
 
 /*
 |--------------------------------------------------------------------------
@@ -36,10 +40,13 @@ Route::get('/dashboard', function () {
     ]);
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::middleware('auth', 'verified')->group(function () {
+Route::middleware('auth', 'verified')->group(function ()    {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    Route::post('/personal_info/store',[PersonalInformationController::class,'store'])->name('personal_info.store');
+    Route::match(['put', 'patch'], '/personal_info/update/{personalInfo}',[PersonalInformationController::class,'update'])->name('personal_info.update');
 
     Route::resource('/user', UserController::class)->except('create', 'show', 'edit');
     Route::post('/user/destroy-bulk', [UserController::class, 'destroyBulk'])->name('user.destroy-bulk');
@@ -50,7 +57,7 @@ Route::middleware('auth', 'verified')->group(function () {
 
     Route::resource('/permission', PermissionController::class)->except('create', 'show', 'edit');
 
-    Route::get('/personnel', function () {
+    Route::get('/personal_data', function () {
     return Inertia::render('Personnel/Index');
 });
 

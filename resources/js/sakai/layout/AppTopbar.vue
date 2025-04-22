@@ -38,7 +38,7 @@ const { onMenuToggle, toggleDarkMode, isDarkTheme } = useLayout();
         </div>
 
         <div class="layout-topbar-actions">
-            <div class="layout-config-menu">
+            <!-- <div class="layout-config-menu">
                 <button type="button" class="layout-topbar-action" @click="toggleDarkMode">
                     <i :class="['pi', { 'pi-moon': isDarkTheme, 'pi-sun': !isDarkTheme }]"></i>
                 </button>
@@ -59,7 +59,7 @@ const { onMenuToggle, toggleDarkMode, isDarkTheme } = useLayout();
                 v-styleclass="{ selector: '@next', enterFromClass: 'hidden', enterActiveClass: 'animate-scalein', leaveToClass: 'hidden', leaveActiveClass: 'animate-fadeout', hideOnOutsideClick: true }"
             >
                 <i class="pi pi-ellipsis-v"></i>
-            </button>
+            </button> -->
 
             <div class="layout-topbar-menu hidden lg:block">
                 <div class="layout-topbar-menu-content">
@@ -69,9 +69,9 @@ const { onMenuToggle, toggleDarkMode, isDarkTheme } = useLayout();
                             <span>Profile</span>
                         </button>
                         <div class="hidden bg-white shadow-md absolute right-0 mt-2 w-48 py-2 rounded-md">
-                            <DropdownLink :href="route('profile.edit')"  as="button">
+                            <!-- <DropdownLink :href="route('profile.edit')"  as="button">
                                             My Profile
-                                        </DropdownLink>
+                                        </DropdownLink> -->
                             <DropdownLink :href="route('logout')" method="post" as="button">
                                             Log Out
                                         </DropdownLink>
