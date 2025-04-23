@@ -29,63 +29,6 @@ const deleteDialog = ref(false);
 const permissionDialog = ref(false);
 const form = useForm({});
 
-// const data = reactive({
-//     params: {
-//         search: props.filters.search,
-//         field: props.filters.field,
-//         order: props.filters.order,
-//         createOpen: false,
-//         editOpen: false,
-//     },
-//     // rank: null,
-// });
-
-// const types = [
-//   {
-//     id: 1,
-//     name: "Officer"
-//   },
-//   {
-//     id: 2,
-//     name: "Non-Officer"
-//   },
-//   {
-//     id: 3,
-//     name: "NUP-Civilian"
-//   }
-// ]
-
-// const deleteData = () => {
-
-//     deleteDialog.value = false;
-    
-//     form.delete(route("rank.destroy", data.rank?.id), {
-//         preserveScroll: true,
-//         onSuccess: () => {
-//             form.reset();
-//         },
-//         onError: () => null,
-//         onFinish: () => null,
-//     });
-// }
-
-
-// const onPageChange = (event) => {
-//     router.get(route('rank.index'), { page: event.page + 1 }, { preserveState: true });
-// };
-
-// watch(
-//     () => _.cloneDeep(data.params),
-//     debounce(() => {
-//         let params = pickBy(data.params);
-//         router.get(route("rank.index"), params, {
-//             replace: true,
-//             preserveState: true,
-//             preserveScroll: true,
-//         });
-//     }, 150)
-// );
-
 </script>
 
 <template>

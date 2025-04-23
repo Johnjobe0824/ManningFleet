@@ -101,9 +101,10 @@ class PersonalInformationController extends Controller
                 'age' => $request->age,
                 'birth_date' => $request->birth_date  
             ]);
+
             DB::commit();
             // return back()->with('success', $personalInfo->serial_no. ' updated successfully.');
-            return Redirect::route('profile.edit');
+            return Redirect::route('profile.edit')->with('success', 'Personnel with serial number '.$personalInfo->serial_no. ' updated successfully.');
         } catch (\Throwable $th) {
             DB::rollback();
             return back()->with('error', 'Error updating ' .  $th->getMessage());

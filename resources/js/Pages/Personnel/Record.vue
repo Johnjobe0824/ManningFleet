@@ -1,11 +1,15 @@
 <script setup>
-import { useForm } from "@inertiajs/vue3";
+import { useForm, usePage } from "@inertiajs/vue3";
 import { watchEffect, reactive, ref } from "vue";
 
 import DeleteUserForm from '../Profile/Partials/DeleteUserForm.vue';
 import UpdatePasswordForm from '../Profile/Partials/UpdatePasswordForm.vue';
 import UpdateProfileInformationForm from '../Profile/Partials/UpdateProfileInformationForm.vue';
 import UpdateUserInformationForm from "../Profile/Partials/UpdateUserInformationForm.vue";
+
+import ServiceRecord from "../Profile/Services/ServiceRecord.vue";
+import Certificates from "../Profile/Certificates/Certificates.vue";
+import Documents from "../Profile/Documents/Documents.vue";
 
 import Profile from './Profile/Index.vue'
 
@@ -28,140 +32,73 @@ const props = defineProps({
 
 const emit = defineEmits(["close"]);
 
-// const data = reactive({
-//     multipleSelect: false,
-// });
+const ranks= usePage().props.ranks;
 
-// const form = useForm({
-//     name: "",
-//     type: ""
-// });
 
-// const types = [
-//   {
-//     id: 1,
-//     name: "Officer"
-//   },
-//   {
-//     id: 2,
-//     name: "Non-Officer"
-//   },
-//   {
-//     id: 3,
-//     name: "NUP-Civilian"
-//   }
-// ];
+const tabs = [
+  {
+    label: 'User Info',
+    component: UpdateUserInformationForm,
+    props: { ranks: ranks }
+  },
+  {
+    label: 'Service Record',
+    component: ServiceRecord
+  },
+  {
+    label: 'Certificates',
+    component: Certificates
+  },
+  {
+    label: 'Documents',
+    component: Documents
+  }
+]
 
-// const create = () => {
-//     form.post(route("rank.store"), {
-//         preserveScroll: true,
-//         onSuccess: () => {
-//             emit("close");
-//             form.reset();
-//         },
-//         onError: () => null,
-//         onFinish: () => null,
-//     });
-// };
-
-// watchEffect(() => {
-//     if (props.show) {
-//         form.errors = {};
-//     }
-// });
-
-// const selectAll = (event) => {
-//     if (event.target.checked === false) {
-//         form.permissions = [];
-//     } else {
-//         form.permissions = [];
-//         props.permissions.forEach((permission) => {
-//             form.permissions.push(permission.id);
-//         });
-//     }
-// };
-// const select = () => {
-//     if (props.permissions.length == form.permissions.length) {
-//         data.multipleSelect = true;
-//     } else {
-//         data.multipleSelect = false;
-//     }
-// };
-
-const items = ref([
-    { route: '/user_info', label: 'User Info', icon: 'pi pi-home' },
-    { route: '/services', label: 'Service Record', icon: 'pi pi-chart-line' },
-    { route: '/certificates', label: 'Certificates', icon: 'pi pi-list' },
-    { route: '/documents', label: 'Documents', icon: 'pi pi-inbox' }
-]);
+const activeTab = ref(0)
 
 </script>
 
 <template>
 
     <div class="card">
-            <Tabs value="0">
-                <TabList>
-                    <Tab v-slot="slotProps"  value="0" asChild>
-                        <div :class="['flex items-center gap-2', slotProps.class]" @click="slotProps.onClick" v-bind="slotProps.a11yAttrs">
-                             <!-- <Avatar image="https://primefaces.org/cdn/primevue/images/avatar/amyelsner.png" shape="circle" /> -->
-                            <span class="font-bold whitespace-nowrap">User Info</span>
-                        </div>
-                       
-                    </Tab>
-                    <Tab v-slot="slotProps"  value="1" asChild>
-                        <div :class="['flex items-center gap-2', slotProps.class]" @click="slotProps.onClick" v-bind="slotProps.a11yAttrs">
-                              <!-- <Avatar image="https://primefaces.org/cdn/primevue/images/avatar/onyamalimba.png" shape="circle" /> -->
-                            <span class="font-bold whitespace-nowrap">Service Record</span>
-                        </div>
-                    </Tab>
-                    <Tab v-slot="slotProps" value="2" asChild>
-                        <div :class="['flex items-center gap-2', slotProps.class]" @click="slotProps.onClick" v-bind="slotProps.a11yAttrs">
-                            <!-- <Avatar image="https://primefaces.org/cdn/primevue/images/avatar/ionibowcher.png" shape="circle" /> -->
-                            <span class="font-bold whitespace-nowrap">Certificates</span>
-                        </div>
-                    </Tab>
-                    <Tab v-slot="slotProps" value="3" asChild>
-                        <div :class="['flex items-center gap-2', slotProps.class]" @click="slotProps.onClick" v-bind="slotProps.a11yAttrs">
-                            <!-- <Avatar image="https://primefaces.org/cdn/primevue/images/avatar/ionibowcher.png" shape="circle" /> -->
-                            <span class="font-bold whitespace-nowrap">Documents</span>
+        <Tabs v-model="activeTab">
+            <TabList>
+                <Tab
+                    v-for="(tab, index) in tabs"
+                    :key="index"
+                    :value="index"
+                    v-slot="slotProps"
+                    asChild
+                >
+                    <div
+                    :class="['flex items-center gap-2', slotProps.class]"
+                    @click="slotProps.onClick"
+                    v-bind="slotProps.a11yAttrs"
+                    >
+                    <span class="font-bold whitespace-nowrap">{{ tab.label }}</span>
+                    </div>
+                </Tab>
+            </TabList>
 
-                        </div>
-                    </Tab>
-                </TabList>
-                <TabPanels>
-                    <TabPanel value="0" v-slot="slotProps" asChild>
-                        <div v-show="slotProps.active" :class="slotProps.class" v-bind="slotProps.a11yAttrs">
-                            <UpdateUserInformationForm
-                            :ranks="ranks"
-                            />
-                        </div>
-                    </TabPanel>
-                    <TabPanel value="1" v-slot="slotProps" asChild>
-                        <div v-show="slotProps.active" :class="slotProps.class" v-bind="slotProps.a11yAttrs">
-                            <p class="m-0">
-                        Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim
-                        ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Consectetur, adipisci velit, sed quia non numquam eius modi.
-                            </p>
-                        </div>
-                    </TabPanel>
-                    <TabPanel v-slot="slotProps" value="2" asChild>
-                        <div v-show="slotProps.active" :class="slotProps.class" v-bind="slotProps.a11yAttrs">
-                            <p class="m-0">
-                                At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in
-                                culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus.
-                            </p>
-                        </div>
-                    </TabPanel>
-                    <TabPanel v-slot="slotProps" value="3" asChild>
-                        <div v-show="slotProps.active" :class="slotProps.class" v-bind="slotProps.a11yAttrs">
-                            <p class="m-0">
-                                Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus.
-                            </p>
-                        </div>
-                    </TabPanel>
-                </TabPanels>
-            </Tabs>
+            <TabPanels>
+                <TabPanel
+                    v-for="(tab, index) in tabs"
+                    :key="index"
+                    :value="index"
+                    v-slot="slotProps"
+                    asChild
+                >
+                    <div
+                    v-show="slotProps.active"
+                    :class="slotProps.class"
+                    v-bind="slotProps.a11yAttrs"
+                    >
+                    <component :is="tab.component" v-bind="tab.props || {}" />
+                    </div>
+                </TabPanel>
+            </TabPanels>
+        </Tabs>
         </div>
     
 </template>

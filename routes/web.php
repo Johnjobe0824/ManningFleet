@@ -14,7 +14,8 @@ use App\Http\Controllers\{
     PermissionController,
     RankController,
     VesselController,
-    PersonalInformationController
+    PersonalInformationController,
+    UserPhotoController
 };
 
 /*
@@ -48,6 +49,7 @@ Route::middleware('auth', 'verified')->group(function ()    {
     Route::post('/personal_info/store',[PersonalInformationController::class,'store'])->name('personal_info.store');
     Route::match(['put', 'patch'], '/personal_info/update/{personalInfo}',[PersonalInformationController::class,'update'])->name('personal_info.update');
 
+    Route::post('/user_photo/store',[UserPhotoController::class,'store'])->name('user_photo.store');
     Route::resource('/user', UserController::class)->except('create', 'show', 'edit');
     Route::post('/user/destroy-bulk', [UserController::class, 'destroyBulk'])->name('user.destroy-bulk');
     

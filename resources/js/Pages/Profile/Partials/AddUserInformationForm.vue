@@ -84,8 +84,6 @@ const genders = ref([
 ]);
 
 const create = () => {
-
-    // console.log(form);
     form.birth_date = new Date(form.birth_date).toISOString().split('T')[0];
     form.post(route("personal_info.store"), {
         preserveScroll: true,

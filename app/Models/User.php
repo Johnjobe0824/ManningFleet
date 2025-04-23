@@ -10,7 +10,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use App\Models\{
     Role,
-    PersonalInformation
+    PersonalInformation,
+    UserPhoto
 };
 
 class User extends Authenticatable
@@ -48,7 +49,7 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
-    protected $with = ['personal_info'];
+    protected $with = ['personal_info','photo'];
 
     public function getCreatedAtAttribute()
     {
@@ -75,6 +76,11 @@ class User extends Authenticatable
     public function personal_info()
     {
         return $this->hasOne(PersonalInformation::class);
+    }
+
+    public function photo()
+    {
+        return $this->hasOne(UserPhoto::class);
     }
 
 }
