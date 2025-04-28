@@ -5,6 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Models\{
+    VesselPosition
+};
 
 class Position extends Model
 {
@@ -23,5 +26,10 @@ class Position extends Model
     public function getUpdatedAtAttribute()
     {
         return date('d-m-Y H:i', strtotime($this->attributes['updated_at']));
+    }
+
+    public function vesselPositions()
+    {
+        return $this->hasMany(VesselPosition::class);
     }
 }

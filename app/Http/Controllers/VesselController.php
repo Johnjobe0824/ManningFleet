@@ -2,7 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Vessel;
+use App\Models\{
+    Vessel,
+    Position,
+    VesselPosition
+};
 use Inertia\Inertia;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -72,6 +76,18 @@ class VesselController extends Controller
                 'size'  => $request->size,
                 'status' => $request->status
             ]);
+
+            // automatic create position in vessel_positions table
+            $defaultPositions = Position::all();
+
+            foreach ($defaultPositions as $position) {
+                VesselPosition::create([
+                    'vessel_id'   => $vessel->id,
+                    'position_id' => $position->id,
+                    'status'      => 'available',
+                ]);
+            }
+
             DB::commit();
             return back()->with('success', $vessel->vessel_name. ' created successfully.');
         } catch (\Throwable $th) {

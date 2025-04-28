@@ -2,7 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Position;
+use App\Models\{
+    Position,
+    Vessel,
+    VesselPosition
+};
 use Illuminate\Http\Request;
 
 use Inertia\Inertia;
@@ -68,6 +72,18 @@ class PositionController extends Controller
                 'name'          => $request->name,
                 'code'          => $request->code
             ]);
+
+            // Now, assign this position to all existing vessels
+            $vessels = Vessel::all();
+
+            foreach ($vessels as $vessel) {
+                VesselPosition::create([
+                    'vessel_id'   => $vessel->id,
+                    'position_id' => $position->id,
+                    'status'      => 'available', // or 'occupied'
+                ]);
+            }
+
             DB::commit();
             return back()->with('success', $position->name. ' created successfully.');
         } catch (\Throwable $th) {
@@ -115,10 +131,12 @@ class PositionController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(position $position)
+    public function destroy(Position $position)
     {
         //
         try {
+            // Delete all related VesselPosition records where the position is assigned
+            $position->vesselPositions()->delete();
             $position->delete();
             return back()->with('success', $position->name. ' deleted successfully.');
         } catch (\Throwable $th) {

@@ -21,9 +21,15 @@ const props = defineProps({
 
 loadToast();
 
+const expandedRows = ref([]);
+
 const deleteDialog = ref(false);
 const permissionDialog = ref(false);
 const form = useForm({});
+
+console.log('vessels ', props.vessels);
+
+
 
 const data = reactive({
     params: {
@@ -36,6 +42,14 @@ const data = reactive({
     vessel: null,
 });
 
+const expandAll = () => {
+    expandedRows.value = products.value.reduce((acc, p) => (acc[p.id] = true) && acc, {});
+};
+
+const collapseAll = () => {
+    expandedRows.value = null;
+};
+
 const getSeverity = (vessel) => {
     switch (vessel.status) {
         case 'Ready For Sea':
@@ -43,6 +57,19 @@ const getSeverity = (vessel) => {
 
         case 'Not Ready For Sea':
             return 'danger';
+
+        default:
+            return null;
+    }
+};
+
+const getOrderSeverity = (order) => {
+    switch (order.status) {
+        case 'available':
+            return 'success';
+
+        case 'occupied':
+            return 'info';
 
         default:
             return null;
@@ -100,7 +127,7 @@ watch(
                 :title="props.title"
             />
             <Button v-show="can(['create vessel'])" label="Create" @click="data.createOpen = true" icon="pi pi-plus" />
-            <DataTable lazy :value="vessels.data" paginator  :rows="vessels.per_page" :totalRecords="vessels.total" :first="(vessels.current_page - 1) * vessels.per_page"   @page="onPageChange"  tableStyle="min-width: 50rem">
+            <!-- <DataTable lazy :value="vessels.data" paginator  :rows="vessels.per_page" :totalRecords="vessels.total" :first="(vessels.current_page - 1) * vessels.per_page"   @page="onPageChange"  tableStyle="min-width: 50rem">
                 <template #header>
                     <div class="flex justify-end">
                         <IconField>
@@ -124,14 +151,11 @@ watch(
                 <Column field="vessel_bow_no" header="Vessel Bow No"></Column>
                 <Column field="category" header="Category"></Column>
                 <Column field="size" header="Size"></Column>
-                <!-- <Column field="status" header="Status"></Column> -->
                 <Column header="Status">
                     <template #body="slotProps">
                         <Tag :value="slotProps.data.status" :severity="getSeverity(slotProps.data)" />
                     </template>
                 </Column>
-                <!-- <Column field="created_at" header="Created"></Column>
-                <Column field="updated_at" header="Updated"></Column> -->
                 <Column :exportable="false" style="min-width: 12rem">
                     <template #body="slotProps">
                         <Button v-show="can(['update vessel'])" icon="pi pi-pencil" outlined rounded class="mr-2"  @click="
@@ -140,6 +164,40 @@ watch(
                         <Button v-show="can(['delete vessel'])" icon="pi pi-trash" outlined rounded severity="danger" @click="deleteDialog = true; data.vessel = slotProps.data" />
                     </template>
                 </Column>
+            </DataTable> -->
+
+            <DataTable v-model:expandedRows="expandedRows" dataKey="id" lazy :value="vessels.data" paginator  :rows="vessels.per_page" :totalRecords="vessels.total" :first="(vessels.current_page - 1) * vessels.per_page"   @page="onPageChange"   tableStyle="min-width: 60rem">
+            <Column expander style="width: 5rem" />
+            <Column field="vessel_name" header="Vessel Name"></Column>
+            <Column field="vessel_bow_no" header="Vessel Bow No"></Column>
+            <Column field="category" header="Category"></Column>
+            <Column field="size" header="Size"></Column>
+            <Column :exportable="false" style="min-width: 12rem">
+                    <template #body="slotProps">
+                        <Button v-show="can(['update vessel'])" icon="pi pi-pencil" outlined rounded class="mr-2"  @click="
+                                                    (data.editOpen = true),
+                                                        (data.vessel = slotProps.data)" />
+                        <Button v-show="can(['delete vessel'])" icon="pi pi-trash" outlined rounded severity="danger" @click="deleteDialog = true; data.vessel = slotProps.data" />
+                    </template>
+            </Column>
+                <template #expansion="slotProps">
+                    <div class="p-4">
+                        <DataTable :value="slotProps.data.assigned_positions">
+                            <Column field="position.name" header="Position"></Column>
+                            <Column field="position.code" header="Code"></Column>
+                            <Column field="status" header="Status" sortable>
+                                <template #body="slotProps">
+                                    <Tag :value="slotProps.data.status.toLowerCase()" :severity="getOrderSeverity(slotProps.data)" />
+                                </template>
+                            </Column>
+                            <Column headerStyle="width:4rem">
+                                <template #body>
+                                    <Button icon="pi pi-search" />
+                                </template>
+                            </Column>
+                        </DataTable>
+                    </div>
+                </template>
             </DataTable>
 
             <Dialog v-model:visible="deleteDialog" :style="{ width: '450px' }" header="Confirm" :modal="true">
