@@ -74,7 +74,8 @@ watch(
 
 <template>
     <app-layout>             
-        <div class="card">            
+        <div class="card"> 
+            <div class="font-semibold text-xl mb-4">User Management</div>           
             <Create
                 :show="data.createOpen"
                 @close="data.createOpen = false"

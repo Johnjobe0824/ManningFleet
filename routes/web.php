@@ -13,6 +13,7 @@ use App\Http\Controllers\{
     ProfileController,
     PermissionController,
     RankController,
+    PositionController,
     VesselController,
     PersonalInformationController,
     UserPhotoController
@@ -55,6 +56,7 @@ Route::middleware('auth', 'verified')->group(function ()    {
     
     Route::resource('/role', RoleController::class)->except('create', 'show', 'edit');
     Route::resource('/rank', RankController::class)->except('create', 'show', 'edit');
+    Route::resource('/position', PositionController::class)->except('create', 'show', 'edit');
     Route::resource('/vessel', VesselController::class)->except('create', 'show', 'edit');
 
     Route::resource('/permission', PermissionController::class)->except('create', 'show', 'edit');
