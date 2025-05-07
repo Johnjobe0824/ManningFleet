@@ -4,6 +4,8 @@ import DeleteUserForm from './Partials/DeleteUserForm.vue';
 import UpdatePasswordForm from './Partials/UpdatePasswordForm.vue';
 import UpdateProfileInformationForm from './Partials/UpdateProfileInformationForm.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
+import TransactionForm from './Transactions/TransactionForm.vue';
+
 import Toast from 'primevue/toast';
 import { Head, useForm, usePage } from '@inertiajs/vue3';
 import axios from 'axios';
@@ -39,7 +41,7 @@ const toast = useToast();
 
 const data = reactive({
     params: {
-        createOpen: false,
+        showTransactionDialog: false,
         editOpen: false,
 
     }
@@ -105,7 +107,7 @@ function onFileSelect(event) {
             life: 5000
         });
 
-        console.error('Upload failed:', errorMessage);
+        // console.error('Upload failed:', errorMessage);
     });
 }
 
@@ -115,14 +117,14 @@ function onFileSelect(event) {
 <template>
     <Head title="Profile" />
 
-    <AuthenticatedLayout>
+    <AuthenticatedLayout :user="user">
         <Toast />
         
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">Profile</h2>
         </template>
 
-        <div class="py-12">
+        <div class="py-6">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
 
                 <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
@@ -131,12 +133,12 @@ function onFileSelect(event) {
                             <div class="flex justify-center w-full">
                                 <Image
                                     :src="src ?? (user.photo?.photo_path ? `/storage/${user.photo.photo_path}` : 'https://primefaces.org/cdn/primevue/images/galleria/galleria10.jpg')"
-                                    class="w-full sm:w-64"
+                                    class="w-full items-center justify-center sm:w-64"
                                     alt="Profile Image"
                                     width="200"
                                 />
                                 </div>
-                            <div class="card flex flex-col items-center gap-6 mt-4">
+                            <div class=" flex flex-col items-center gap-6 mt-2">
                             <FileUpload
                                 mode="basic"
                                 @select="onFileSelect"
@@ -145,6 +147,7 @@ function onFileSelect(event) {
                                 chooseLabel="Upload Photo"
                                 accept="image/*"
                                 class="p-button-outlined"
+                                severity="secondary"
                             />
                             </div>
                         </div>
@@ -152,24 +155,36 @@ function onFileSelect(event) {
                         <div class="w-full md:w-2/12">
                             <Divider layout="vertical" />
                         </div>
-                        <div class="w-full md:w-7/12 flex py-5">
+                        <div class="w-full md:w-5/12 flex py-5">
                                 <ul class="list-none p-0 m-0">
                                     <li class="flex flex-col md:flex-row md:items-center md:justify-between mb-2">
                                         <div>
-                                            <span class="font-medium mb-1 md:mb-0">Name</span>
-                                            <div class="mt-1 ml-5 text-muted-color">{{ personal_info.rank?.name }} {{ personal_info?.first_name }} {{ personal_info?.middle_name }} {{ personal_info?.last_name }} {{ personal_info?.suffix }} {{ personal_info.serial_no }} PCG</div>
+                                            <!-- <span class="font-medium mb-1 md:mb-0">Name</span> -->
+                                            <div class="mt-1 ml-5 text-muted-color font-extrabold text-4xl">{{ personal_info.rank?.name }} {{ personal_info?.first_name }} {{ personal_info?.middle_name }} {{ personal_info?.last_name }} {{ personal_info?.suffix }} PCG</div>
                                         </div>
                     
                                     </li>
                                     <li class="flex flex-col md:flex-row md:items-center md:justify-between mb-2">
-                                        <div>
-                                            <span class="font-medium mb-1 md:mb-0">Email</span>
-                                            <div class="mt-1 ml-5 text-muted-color">{{ user.email }}</div>
-                                        </div>
-                                        
+                                            <!-- <span class="font-medium mb-1 md:mb-0">Email</span> -->
+                                            <div class="mt-1 ml-5 text-muted-color text-xl">{{ user.email }}</div>
+                                    </li>
+                                    <li class="flex flex-col md:flex-row md:items-center md:justify-between mb-2">
+                                            <!-- <span class="font-medium mb-1 md:mb-0">Email</span> -->
+                                            <div class="mt-1 ml-5 text-muted-color text-xl">SRN: {{ personal_info.serial_no }}</div> 
                                     </li>
                                 </ul>
                         </div>
+                        <div class="w-full md:w-3/12 flex flex-col justify-end items-center py-5">
+                            <Button 
+                            label="Select Transaction" 
+                            icon="pi pi-plus"
+                            size="medium"
+                            class="w-full md:w-auto"
+                            severity="warn"
+                            @click="data.showTransactionDialog = true"
+                            />
+                        </div>
+
                     </div>
                 </div>
 
@@ -177,24 +192,12 @@ function onFileSelect(event) {
                     <Record
                     :ranks ="ranks"
                     />
-                <!-- <div class="p-4 sm:p-8">
-                    <UpdateProfileInformationForm
-                        :must-verify-email="mustVerifyEmail"
-                        :status="status"
-                        class="max-w-xl"
+                    <TransactionForm
+                    :show="data.showTransactionDialog"
+                    @close="data.showTransactionDialog = false"
                     />
                 </div>
 
-                <div class="p-4 sm:p-8">
-                    <UpdatePasswordForm class="max-w-xl" />
-                </div> -->
-                </div>
-
-                
-
-                <!-- <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
-                    <DeleteUserForm class="max-w-xl" />
-                </div> -->
             </div>
         </div>
     </AuthenticatedLayout>

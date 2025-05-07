@@ -51,5 +51,14 @@ class RoleSeeder extends Seeder
             'read role',
             'read permission',
         ]);
+
+
+        $officer = Role::create([
+            'name'          => 'officer'
+        ]);
+        
+        $officer->givePermissionTo([
+            'read profile',
+        ]);
     }
 }

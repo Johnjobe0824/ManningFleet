@@ -27,5 +27,22 @@ class PermissionSeeder extends Seeder
         Permission::create(['name' => 'update permission']);
         Permission::create(['name' => 'read permission']);
         Permission::create(['name' => 'create permission']);
+
+        Permission::create(['name' => 'delete rank']);
+        Permission::create(['name' => 'update rank']);
+        Permission::create(['name' => 'read rank']);
+        Permission::create(['name' => 'create rank']);
+
+        Permission::create(['name' => 'delete vessel']);
+        Permission::create(['name' => 'update vessel']);
+        Permission::create(['name' => 'read vessel']);
+        Permission::create(['name' => 'create vessel']);
+
+        ermission::create(['name' => 'delete position']);
+        Permission::create(['name' => 'update position']);
+        Permission::create(['name' => 'read position']);
+        Permission::create(['name' => 'create position']);
+
+        ermission::create(['name' => 'delete profile']);
     }
 }

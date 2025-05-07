@@ -37,32 +37,47 @@ const ranks= usePage().props.ranks;
 
 const tabs = [
   {
-    label: 'User Info',
+    label: 'Profile',
     component: UpdateUserInformationForm,
     props: { ranks: ranks }
   },
   {
-    label: 'Service Record',
+    label: 'Sea-Duty Record',
     component: ServiceRecord
+  },
+  
+  {
+    label: 'Documents',
+    component: Documents
   },
   {
     label: 'Certificates',
     component: Certificates
   },
   {
-    label: 'Documents',
-    component: Documents
+    label: 'Training/Schooling',
+    component: Certificates
+  },
+  {
+    label: 'Assessment',
+    component: Certificates
+  },
+  {
+    label: 'Chips Report',
+    component: Certificates
   }
 ]
 
-const activeTab = ref(0)
+// const activeTab = ref(0)
+const activeTab = ref(window.defaultTab || 0) // Set default tab based on session
+
 
 </script>
 
 <template>
 
     <div class="card">
-        <Tabs v-model="activeTab">
+        <Tabs v-model="activeTab" scrollable>
             <TabList>
                 <Tab
                     v-for="(tab, index) in tabs"

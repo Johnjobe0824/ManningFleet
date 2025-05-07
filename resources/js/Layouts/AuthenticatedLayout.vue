@@ -8,22 +8,40 @@ import ResponsiveNavLink from '@/Components/ResponsiveNavLink.vue';
 import { Link } from '@inertiajs/vue3';
 
 const showingNavigationDropdown = ref(false);
+const props = defineProps({
+    user:Object,
+});
+
+const personal_info = props.user.personal_info || {};
+
+const name = [
+  personal_info.rank?.name,
+  personal_info.first_name,
+  personal_info.last_name,
+  "PCG"
+].filter(Boolean).join(' ');
+
+
 </script>
 
 <template>
     <div>
         <div class="min-h-screen bg-gray-100">
-            <nav class="bg-white border-b border-gray-100">
+            <nav class="bg-blue-800 border-b border-gray-100">
                 <!-- Primary Navigation Menu -->
                 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div class="flex justify-between h-16">
                         <div class="flex">
                             <!-- Logo -->
                             <div class="shrink-0 flex items-center">
-                                <Link :href="route('dashboard')">
-                                    <ApplicationLogo
+                                <Link :href="route('profile.edit')">
+                                    <!-- <ApplicationLogo
                                         class="block h-9 w-auto fill-current text-gray-800"
-                                    />
+                                    /> -->
+                                    <div class="flex items-center">
+                                    <img src="/demo/images/cgfleet_logo-removebg-preview.png" class="m-2 h-10 w-auto fill-current text-gray-800" alt="CGFLEET MANNING GROUP" />
+                                    <span class="text-white text-xl font-bold">MANNING GROUP CGFLEET</span>
+                                    </div>
                                 </Link>
                             </div>
 
@@ -43,9 +61,9 @@ const showingNavigationDropdown = ref(false);
                                         <span class="inline-flex rounded-md">
                                             <button
                                                 type="button"
-                                                class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150"
+                                                class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-white  hover:text-gray-700 focus:outline-none transition ease-in-out duration-150"
                                             >
-                                                {{ $page.props.auth.user.name }}
+                                                {{ name }}
 
                                                 <svg
                                                     class="ms-2 -me-0.5 h-4 w-4"
@@ -64,7 +82,7 @@ const showingNavigationDropdown = ref(false);
                                     </template>
 
                                     <template #content>
-                                        <!-- <DropdownLink :href="route('profile.edit')"> Profile </DropdownLink> -->
+                                        <!-- <DropdownLink :href="route('profile.change_password')"> Change Password </DropdownLink> -->
                                         <DropdownLink :href="route('logout')" method="post" as="button">
                                             Log Out
                                         </DropdownLink>
