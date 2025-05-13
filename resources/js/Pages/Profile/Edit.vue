@@ -28,12 +28,15 @@ import FileUpload from "primevue/fileupload";
 const props = defineProps({
     user:Object,
     ranks: Object,
+    documents: Object,
     status: String,
     mustVerifyEmail: Boolean
 });
 
-const user = usePage().props.auth.user;
-const personal_info = user.personal_info;
+// const user = usePage().props.auth.user;
+const user = ref({ ...usePage().props.auth.user });
+
+const personal_info = computed(() => user.value.personal_info);
 
 loadToast();
 
@@ -191,6 +194,8 @@ function onFileSelect(event) {
                 <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
                     <Record
                     :ranks ="ranks"
+                    :documents = "documents"
+                    :user="user"
                     />
                     <TransactionForm
                     :show="data.showTransactionDialog"

@@ -75,7 +75,7 @@ watch(
             <!-- <header>
                 <h2 class="text-lg font-medium text-gray-900 mb-4">Position Management</h2>
             </header>    -->
-            <div class="font-semibold text-xl mb-4">Position Management</div>       
+            <div class="font-semibold text-xl mb-4">Document Management</div>       
             <Create
                 :show="data.createOpen"
                 @close="data.createOpen = false"

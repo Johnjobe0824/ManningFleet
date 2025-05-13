@@ -16,7 +16,8 @@ use App\Http\Controllers\{
     PositionController,
     VesselController,
     PersonalInformationController,
-    UserPhotoController
+    UserPhotoController,
+    DocumentController
 };
 
 /*
@@ -60,6 +61,12 @@ Route::middleware('auth', 'verified')->group(function ()    {
     Route::resource('/vessel', VesselController::class)->except('create', 'show', 'edit');
 
     Route::resource('/permission', PermissionController::class)->except('create', 'show', 'edit');
+
+    Route::get('/documents', [DocumentController::class, 'index'])->name('documents.index');
+    Route::post('/documents', [DocumentController::class, 'store'])->name('documents.store');
+    Route::delete('/documents/{document}', [DocumentController::class, 'destroy'])->name('documents.destroy');
+    Route::patch('/documents/{document}/status', [DocumentController::class, 'updateStatus'])->name('documents.updateStatus');
+
 
     Route::get('/personal_data', function () {
     return Inertia::render('Personnel/Index');

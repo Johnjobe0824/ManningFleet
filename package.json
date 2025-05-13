@@ -9,6 +9,7 @@
         "@primevue/themes": "^4.0.0",
         "chart.js": "3.3.2",
         "lodash": "^4.17.21",
+        "pdfjs-dist": "^5.2.133",
         "primeicons": "^6.0.1",
         "primevue": "^4.0.0",
         "vue-router": "^4.4.0"

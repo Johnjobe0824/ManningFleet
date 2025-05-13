@@ -78,7 +78,7 @@ const formatCurrency = (value) => {
         </header>
 
         <div class="mt-2 space-y-2">
-            <PrimaryButton 
+            <!-- <PrimaryButton 
                 v-if="!user.personal_info || user.personal_info.length === 0" 
                 @click="data.createOpen = true"
             >
@@ -90,7 +90,7 @@ const formatCurrency = (value) => {
                 @click="data.editOpen = true"
             >
                 Edit Personal Info
-            </PrimaryButton>                                                                                
+            </PrimaryButton>                                                                                 -->
 <!-- 
             <AddUserInformationForm
                 :show="data.createOpen"

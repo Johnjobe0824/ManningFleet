@@ -11,7 +11,8 @@ use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 use Inertia\Response;
 use App\Models\{
-    Rank
+    Rank,
+    Document
 };
 
 class ProfileController extends Controller
@@ -23,12 +24,16 @@ class ProfileController extends Controller
     {
 
         $ranks = Rank::whereType('Officer')->get();
+
+         // Get the user's documents (assuming the relation exists, e.g. user has many documents)
+        $documents = Document::where('user_id', $request->user()->id)->get();
                 
         return Inertia::render('Profile/Edit', [
             'mustVerifyEmail' => $request->user() instanceof MustVerifyEmail,
             'status' => session('status'),
             'user' => $request->user(),
-            'ranks' => $ranks
+            'ranks' => $ranks,
+            'documents' => $documents,
         ]);
     }
 

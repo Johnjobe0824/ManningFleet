@@ -17,7 +17,11 @@ const model = ref([
     },
     {
         // label: 'Master',
-        items: [{ label: 'User', icon: 'pi pi-fw pi-user', to: '/user', can:'read user' }]
+        items: [
+            { label: 'Document', icon: 'pi pi-fw pi-user', to: '/documents', can:'read document' },
+            { label: 'User', icon: 'pi pi-fw pi-user', to: '/user', can:'read user' }
+        ]
+
     },
     {
         // label: 'Setting',

@@ -9,6 +9,7 @@ import Divider from 'primevue/divider';
 import TreeTable from 'primevue/treetable';
 import DataTable from 'primevue/datatable';
 import { onMounted, reactive, ref, watch, computed} from "vue";
+import { useToast } from 'primevue/usetoast';
 
 // import { NodeService } from '@/service/NodeService';
 import { NodeService } from '@/sakai/service/NodeService';
@@ -32,7 +33,7 @@ const data = reactive({
 
 // const products = ref();
 const expandedRows = ref({});
-// const toast = useToast();
+const toast = useToast();
 
 const products = [
             {
@@ -153,12 +154,12 @@ const formatCurrency = (value) => {
 <template>
     <section>
         <header>
-            <h2 class="text-lg font-medium text-gray-900">Certificates</h2>
+            <h2 class="text-lg font-medium text-gray-900">Training & Certification</h2>
 
         </header>
 
         <div class="mt-2 space-y-2">
-            <PrimaryButton 
+            <!-- <PrimaryButton 
                 v-if="!user.personal_info || user.personal_info.length === 0" 
                 @click="data.createOpen = true"
             >
@@ -170,7 +171,7 @@ const formatCurrency = (value) => {
                 @click="data.editOpen = true"
             >
                 Edit Personal Info
-            </PrimaryButton>                                                                                
+            </PrimaryButton>                                                                                 -->
 <!-- 
             <AddUserInformationForm
                 :show="data.createOpen"
@@ -185,40 +186,40 @@ const formatCurrency = (value) => {
             /> -->
             <div class="card">
                 <DataTable v-model:expandedRows="expandedRows" :value="products" dataKey="id" tableStyle="min-width: 60rem">
-            <Column expander style="width: 5rem" />
-            <Column field="name" header="Name"></Column>
-            <Column header="Image">
-                <template #body="slotProps">
-                    <img :src="`https://primefaces.org/cdn/primevue/images/product/${slotProps.data.image}`" :alt="slotProps.data.image" class="shadow-lg" width="64" />
+                <Column expander style="width: 5rem" />
+                <Column field="name" header="Name"></Column>
+                <Column header="Image">
+                    <template #body="slotProps">
+                        <img :src="`https://primefaces.org/cdn/primevue/images/product/${slotProps.data.image}`" :alt="slotProps.data.image" class="shadow-lg" width="64" />
+                    </template>
+                </Column>
+                <Column field="price" header="Price">
+                    <template #body="slotProps">
+                        {{ formatCurrency(slotProps.data.price) }}
+                    </template>
+                </Column>
+                <Column field="category" header="Category"></Column>
+                <Column field="rating" header="Reviews">
+                    <template #body="slotProps">
+                        <Rating :modelValue="slotProps.data.rating" readonly />
+                    </template>
+                </Column>
+                <template #expansion="slotProps">
+                    <div class="p-4">
+                        <h5>Orders for {{ slotProps.data.name }}</h5>
+                        <DataTable :value="slotProps.data.orders">
+                            <Column field="id" header="Id" sortable></Column>
+                            <Column field="customer" header="Customer" sortable></Column>
+                            <Column field="date" header="Date" sortable></Column>
+                            <Column headerStyle="width:4rem">
+                                <template #body>
+                                    <Button icon="pi pi-search" />
+                                </template>
+                            </Column>
+                        </DataTable>
+                    </div>
                 </template>
-            </Column>
-            <Column field="price" header="Price">
-                <template #body="slotProps">
-                    {{ formatCurrency(slotProps.data.price) }}
-                </template>
-            </Column>
-            <Column field="category" header="Category"></Column>
-            <Column field="rating" header="Reviews">
-                <template #body="slotProps">
-                    <Rating :modelValue="slotProps.data.rating" readonly />
-                </template>
-            </Column>
-            <template #expansion="slotProps">
-                <div class="p-4">
-                    <h5>Orders for {{ slotProps.data.name }}</h5>
-                    <DataTable :value="slotProps.data.orders">
-                        <Column field="id" header="Id" sortable></Column>
-                        <Column field="customer" header="Customer" sortable></Column>
-                        <Column field="date" header="Date" sortable></Column>
-                        <Column headerStyle="width:4rem">
-                            <template #body>
-                                <Button icon="pi pi-search" />
-                            </template>
-                        </Column>
-                    </DataTable>
-                </div>
-            </template>
-        </DataTable>
+            </DataTable>
     </div>
         </div>
 

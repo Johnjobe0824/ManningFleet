@@ -26,13 +26,17 @@ const props = defineProps({
     permissions:Object,
     status: String,
     mustVerifyEmail: Boolean,
-    ranks: Object
+    ranks: Object,
+    documents: Object,
+    user: Object
 });
 
 
 const emit = defineEmits(["close"]);
 
 const ranks= usePage().props.ranks;
+const documents = usePage().props.documents;
+const user = usePage().props.user;
 
 
 const tabs = [
@@ -48,14 +52,11 @@ const tabs = [
   
   {
     label: 'Documents',
-    component: Documents
+    component: Documents,
+    props: {documents: documents, user: user}
   },
   {
-    label: 'Certificates',
-    component: Certificates
-  },
-  {
-    label: 'Training/Schooling',
+    label: 'Training & Certification',
     component: Certificates
   },
   {
