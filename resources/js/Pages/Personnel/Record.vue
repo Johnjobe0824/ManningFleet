@@ -1,6 +1,6 @@
 <script setup>
 import { useForm, usePage } from "@inertiajs/vue3";
-import { watchEffect, reactive, ref } from "vue";
+import { watchEffect, reactive, ref,computed } from "vue";
 
 import DeleteUserForm from '../Profile/Partials/DeleteUserForm.vue';
 import UpdatePasswordForm from '../Profile/Partials/UpdatePasswordForm.vue';
@@ -28,36 +28,39 @@ const props = defineProps({
     mustVerifyEmail: Boolean,
     ranks: Object,
     documents: Object,
+    certificates: Object,
     user: Object
 });
 
 
 const emit = defineEmits(["close"]);
 
-const ranks= usePage().props.ranks;
-const documents = usePage().props.documents;
-const user = usePage().props.user;
+
+const certificates = computed(() => usePage().props.certificates);
+const documents = computed(() => usePage().props.documents);
+const ranks = computed(() => usePage().props.ranks);
+const user = computed(() => usePage().props.user);
 
 
-const tabs = [
+const tabs = computed(() => [
   {
     label: 'Profile',
     component: UpdateUserInformationForm,
-    props: { ranks: ranks }
+    props: { ranks: ranks.value }
   },
   {
     label: 'Sea-Duty Record',
     component: ServiceRecord
   },
-  
   {
     label: 'Documents',
     component: Documents,
-    props: {documents: documents, user: user}
+    props: { documents: documents.value, user: user.value }
   },
   {
     label: 'Training & Certification',
-    component: Certificates
+    component: Certificates,
+    props: { certificates: certificates.value, user: user.value }
   },
   {
     label: 'Assessment',
@@ -67,7 +70,8 @@ const tabs = [
     label: 'Chips Report',
     component: Certificates
   }
-]
+]);
+
 
 // const activeTab = ref(0)
 const activeTab = ref(window.defaultTab || 0) // Set default tab based on session

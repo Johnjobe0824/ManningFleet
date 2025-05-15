@@ -17,7 +17,8 @@ use App\Http\Controllers\{
     VesselController,
     PersonalInformationController,
     UserPhotoController,
-    DocumentController
+    DocumentController,
+    CertificationController
 };
 
 /*
@@ -59,6 +60,9 @@ Route::middleware('auth', 'verified')->group(function ()    {
     Route::resource('/rank', RankController::class)->except('create', 'show', 'edit');
     Route::resource('/position', PositionController::class)->except('create', 'show', 'edit');
     Route::resource('/vessel', VesselController::class)->except('create', 'show', 'edit');
+
+    Route::resource('/certificates', CertificationController::class)->except('create', 'show', 'edit');
+    Route::patch('/certificates/{certificate}/status', [CertificationController::class, 'updateStatus'])->name('certificates.updateStatus');
 
     Route::resource('/permission', PermissionController::class)->except('create', 'show', 'edit');
 

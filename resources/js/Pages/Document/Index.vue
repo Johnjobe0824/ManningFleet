@@ -2,7 +2,6 @@
 <script setup>
 import AppLayout from "@/sakai/layout/AppLayout.vue";
 import Create from "@/Pages/Document/Create.vue";
-import Edit from "@/Pages/Document/Edit.vue";
 import { usePage, useForm } from '@inertiajs/vue3';
 
 import { onMounted, reactive, ref, watch, computed } from "vue";
@@ -192,6 +191,11 @@ const updateStatus = async (rowData) => {
                 </Column>
 
                 <Column field="name" header="Name"></Column>
+                <Column header="Officer Name">
+                    <template #body="slotProps">
+                        {{slotProps.data.user?.name}}
+                    </template>
+                </Column>
                 <Column field="path" header="File"></Column>
                 <Column header="Status">
                     <template #body="slotProps">

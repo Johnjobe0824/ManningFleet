@@ -29,12 +29,14 @@ const props = defineProps({
     user:Object,
     ranks: Object,
     documents: Object,
+    certificates: Object,
     status: String,
     mustVerifyEmail: Boolean
 });
 
 // const user = usePage().props.auth.user;
 const user = ref({ ...usePage().props.auth.user });
+const certificates = computed(() => usePage().props.certificates);
 
 const personal_info = computed(() => user.value.personal_info);
 
@@ -196,6 +198,7 @@ function onFileSelect(event) {
                     :ranks ="ranks"
                     :documents = "documents"
                     :user="user"
+                    :certificates = "certificates"
                     />
                     <TransactionForm
                     :show="data.showTransactionDialog"

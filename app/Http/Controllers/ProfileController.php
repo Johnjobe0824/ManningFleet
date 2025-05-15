@@ -12,7 +12,8 @@ use Inertia\Inertia;
 use Inertia\Response;
 use App\Models\{
     Rank,
-    Document
+    Document,
+    Certification
 };
 
 class ProfileController extends Controller
@@ -27,6 +28,7 @@ class ProfileController extends Controller
 
          // Get the user's documents (assuming the relation exists, e.g. user has many documents)
         $documents = Document::where('user_id', $request->user()->id)->get();
+        $certificates = Certification::where('user_id', $request->user()->id)->get();
                 
         return Inertia::render('Profile/Edit', [
             'mustVerifyEmail' => $request->user() instanceof MustVerifyEmail,
@@ -34,6 +36,7 @@ class ProfileController extends Controller
             'user' => $request->user(),
             'ranks' => $ranks,
             'documents' => $documents,
+            'certificates' => $certificates
         ]);
     }
 

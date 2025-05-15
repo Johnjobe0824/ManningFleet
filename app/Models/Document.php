@@ -14,6 +14,7 @@ class Document extends Model
     use HasFactory, SoftDeletes;
 
     protected $fillable = ['user_id', 'name', 'path', 'status'];
+    protected $with =['user'];
 
     public function user()
     {

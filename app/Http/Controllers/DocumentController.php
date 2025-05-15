@@ -27,7 +27,7 @@ class DocumentController extends Controller
     {
         $documents = Document::query();
         if ($request->has('search')) {
-            $document->where('name', 'LIKE', "%" . $request->search . "%");
+            $documents->where('name', 'LIKE', "%" . $request->search . "%");
             $documents->orWhere('status', 'LIKE', "%" . $request->search . "%");
         }
 
@@ -61,8 +61,6 @@ class DocumentController extends Controller
             ]);
     
             DB::commit();
-    
-            // ✅ Return JSON response instead of redirect
             return response()->json([
                 'message' => 'Document uploaded successfully.',
                 'document' => $doc,
