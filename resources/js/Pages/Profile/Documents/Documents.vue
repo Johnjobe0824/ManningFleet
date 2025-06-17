@@ -9,6 +9,7 @@ import Tag from 'primevue/tag';
 import Dialog from 'primevue/dialog';
 import { useToast } from 'primevue/usetoast';
 import axios from 'axios';
+import FilePreview from '@/Components/FilePreview.vue';
 
 const props = defineProps({
     documents: Object,
@@ -16,6 +17,8 @@ const props = defineProps({
 });
 
 const toast = useToast();
+const previewRef = ref(null);
+
 
 // ✅ Make documents reactive
 const documents = ref([...props.documents]);
@@ -201,14 +204,23 @@ const getFileIcon = (path) => {
                     </div>
                     <div class="flex mt-4 gap-2">
                         <Button
-                        v-show="can(['delete document'])" 
-                        label="Delete"
-                        icon="pi pi-trash"
-                        @click="deleteDocument(item.id)"
-                        severity="secondary"
-                        text
+                            label="Preview"
+                            icon="pi pi-eye"
+                            @click="previewRef?.show(`/storage/${item.path}`, item.name)"
+                            severity="info"
+                            text
                         />
-                    </div>
+
+                        <Button
+                            v-show="can(['delete document'])" 
+                            label="Delete"
+                            icon="pi pi-trash"
+                            @click="deleteDocument(item.id)"
+                            severity="secondary"
+                            text
+                        />
+                        </div>
+
                     </div>
                 </div>
                 </div>
@@ -224,5 +236,7 @@ const getFileIcon = (path) => {
                 <Button label="Upload" icon="pi pi-upload" @click="confirmUpload" severity="primary" />
             </div>
         </Dialog>
+        <FilePreview ref="previewRef" />
+
     </div>
 </template>

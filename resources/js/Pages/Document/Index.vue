@@ -9,7 +9,7 @@ import pkg from "lodash";
 import { router } from "@inertiajs/vue3";
 const { _, debounce, pickBy } = pkg;
 import { loadToast } from '@/composables/loadToast';
-
+import FilePreview from "@/Components/FilePreview.vue";
 import { useConfirm } from 'primevue/useconfirm';
 import { useToast } from 'primevue/usetoast';
 
@@ -28,6 +28,14 @@ const toast = useToast();
 const deleteDialog = ref(false);
 const permissionDialog = ref(false);
 const form = useForm({});
+const previewRef = ref(null);
+
+// Preview handler
+const previewDocument = (path, name) => {
+  if (previewRef.value) {
+    previewRef.value.show(`/storage/${path}`, name);
+  }
+};
 
 const data = reactive({
     params: {
@@ -196,7 +204,19 @@ const updateStatus = async (rowData) => {
                         {{slotProps.data.user?.name}}
                     </template>
                 </Column>
-                <Column field="path" header="File"></Column>
+                <Column header="File">
+                    <template #body="slotProps">
+                        <Button
+                        icon="pi pi-eye"
+                        label="Preview"
+                        @click="previewDocument(slotProps.data.path, slotProps.data.name)"
+                        outlined
+                        size="small"
+                        />
+                    </template>
+                </Column>
+
+                
                 <Column header="Status">
                     <template #body="slotProps">
                         <div>
@@ -258,6 +278,7 @@ const updateStatus = async (rowData) => {
                 </div>
             </Dialog> -->
         </div>
+        <FilePreview ref="previewRef" />
     </app-layout>
 </template>
 
