@@ -6,7 +6,7 @@ use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Application;
 use Spatie\Permission\Models\Permission;
-
+use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\{
     RoleController,
     UserController,
@@ -38,13 +38,18 @@ Route::get('/', function () {
 });
 
 Route::get('/dashboard', function () {
+    $user = Auth::user();
+
+    if ($user->hasRole('officer')) {
+        return redirect()->route('profile.edit');
+    }
+
     return Inertia::render('Dashboard', [
-        'users'         => (int) User::count(),
-        'roles'         => (int) Role::count(),
-        'permissions'   => (int) Permission::count(),
+        'users' => (int) User::count(),
+        'roles' => (int) Role::count(),
+        'permissions' => (int) Permission::count(),
     ]);
 })->middleware(['auth', 'verified'])->name('dashboard');
-
 Route::middleware('auth', 'verified')->group(function ()    {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
