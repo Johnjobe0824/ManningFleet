@@ -4,7 +4,13 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use Database\Seeders\RankSeeder;
+use Database\Seeders\{
+    RankSeeder,
+    PermissionSeeder,
+    RoleSeeder,
+    UserSeeder,
+    PositionSeeder
+};
 
 class DatabaseSeeder extends Seeder
 {
@@ -20,6 +26,7 @@ class DatabaseSeeder extends Seeder
             RoleSeeder::class,
             UserSeeder::class,
             RankSeeder::class,
+            PositionSeeder::class,
         ]);
     }
 }

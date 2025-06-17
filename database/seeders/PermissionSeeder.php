@@ -13,36 +13,22 @@ class PermissionSeeder extends Seeder
      */
     public function run(): void
     {
-        Permission::create(['name' => 'delete user']);
-        Permission::create(['name' => 'update user']);
-        Permission::create(['name' => 'read user']);
-        Permission::create(['name' => 'create user']);
+        $resources = [
+            'user', 'role', 'permission', 'rank', 'vessel',
+            'position', 'sea_duty', 'document', 'training', 'profile',
+        ];
 
-        Permission::create(['name' => 'delete role']);
-        Permission::create(['name' => 'update role']);
-        Permission::create(['name' => 'read role']);
-        Permission::create(['name' => 'create role']);
+        $actions = ['create', 'read', 'update', 'delete'];
 
-        Permission::create(['name' => 'delete permission']);
-        Permission::create(['name' => 'update permission']);
-        Permission::create(['name' => 'read permission']);
-        Permission::create(['name' => 'create permission']);
+        foreach ($resources as $resource) {
+            foreach ($actions as $action) {
+                // Avoid unnecessary permissions (e.g. no create/read/update for profile)
+                if ($resource === 'profile' && $action !== 'delete') {
+                    continue;
+                }
 
-        Permission::create(['name' => 'delete rank']);
-        Permission::create(['name' => 'update rank']);
-        Permission::create(['name' => 'read rank']);
-        Permission::create(['name' => 'create rank']);
-
-        Permission::create(['name' => 'delete vessel']);
-        Permission::create(['name' => 'update vessel']);
-        Permission::create(['name' => 'read vessel']);
-        Permission::create(['name' => 'create vessel']);
-
-        ermission::create(['name' => 'delete position']);
-        Permission::create(['name' => 'update position']);
-        Permission::create(['name' => 'read position']);
-        Permission::create(['name' => 'create position']);
-
-        ermission::create(['name' => 'delete profile']);
+                Permission::firstOrCreate(['name' => "$action $resource"]);
+            }
+        }
     }
 }
