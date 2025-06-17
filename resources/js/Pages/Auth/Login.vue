@@ -60,7 +60,7 @@ const submit = () => {
                                 </div>
                                 <span class="font-medium no-underline ml-2 text-right cursor-pointer text-primary">Forgot password?</span>
                             </div>
-                            <Button type="submit" label="Sign In" class="w-full"></Button>
+                            <Button type="submit" label="Sign In" class="w-full  bg-blue-500 border-blue-500 hover:bg-blue-600 hover:border-blue-600 text-white"></Button>
                         </div>
                     </form>
                 </div>

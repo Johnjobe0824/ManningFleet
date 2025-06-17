@@ -30,6 +30,8 @@ const props = defineProps({
     ranks: Object,
     documents: Object,
     certificates: Object,
+    seaDutyRecords: Object, 
+    vessels: Array,
     status: String,
     mustVerifyEmail: Boolean
 });
@@ -37,8 +39,8 @@ const props = defineProps({
 // const user = usePage().props.auth.user;
 const user = ref({ ...usePage().props.auth.user });
 const certificates = computed(() => usePage().props.certificates);
-
 const personal_info = computed(() => user.value.personal_info);
+
 
 loadToast();
 
@@ -56,7 +58,7 @@ const src = ref(null);
 
 const form = useForm({
     photo_path: "",
-    user_id: user.id
+    user_id: user.value.id
 });
 
 function onFileSelect(event) {
@@ -76,16 +78,16 @@ function onFileSelect(event) {
   // Prepare form data
   const formData = new FormData();
   formData.append('photo_path', file);
-  formData.append('user_id', user.id);
+  formData.append('user_id', user.value.id);
   if (user.photo) {
-    formData.append('existing_photo', user.photo);
+    formData.append('existing_photo', user.value.photo);
   }
 
   axios.post(route('user_photo.store'), formData)
     .then(response => {
       const updatedUser = response.data.props?.user;
       if (updatedUser) {
-        user.photo = updatedUser.photo;
+        user.value.photo = updatedUser.photo;
       }
 
       // ✅ Show success toast
@@ -199,6 +201,8 @@ function onFileSelect(event) {
                     :documents = "documents"
                     :user="user"
                     :certificates = "certificates"
+                    :sea-duty-records="seaDutyRecords"
+                    :vessels="vessels"
                     />
                     <TransactionForm
                     :show="data.showTransactionDialog"

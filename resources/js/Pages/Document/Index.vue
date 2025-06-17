@@ -3,7 +3,7 @@
 import AppLayout from "@/sakai/layout/AppLayout.vue";
 import Create from "@/Pages/Document/Create.vue";
 import { usePage, useForm } from '@inertiajs/vue3';
-
+import ConfirmDialog from "primevue/confirmdialog";
 import { onMounted, reactive, ref, watch, computed } from "vue";
 import pkg from "lodash";
 import { router } from "@inertiajs/vue3";

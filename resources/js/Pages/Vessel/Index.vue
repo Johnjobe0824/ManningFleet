@@ -29,8 +29,6 @@ const form = useForm({});
 
 console.log('vessels ', props.vessels);
 
-
-
 const data = reactive({
     params: {
         search: props.filters.search,

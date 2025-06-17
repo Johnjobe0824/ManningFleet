@@ -18,7 +18,8 @@ use App\Http\Controllers\{
     PersonalInformationController,
     UserPhotoController,
     DocumentController,
-    CertificationController
+    CertificationController,
+    SeaDutyRecordController
 };
 
 /*
@@ -70,6 +71,11 @@ Route::middleware('auth', 'verified')->group(function ()    {
     Route::post('/documents', [DocumentController::class, 'store'])->name('documents.store');
     Route::delete('/documents/{document}', [DocumentController::class, 'destroy'])->name('documents.destroy');
     Route::patch('/documents/{document}/status', [DocumentController::class, 'updateStatus'])->name('documents.updateStatus');
+
+    Route::get('/seaDutyRecords', [SeaDutyRecordController::class, 'index'])->name('seaDutyRecords.index');
+    Route::post('/seaDutyRecords', [SeaDutyRecordController::class, 'store'])->name('seaDutyRecords.store');
+    Route::delete('/seaDutyRecords/{seaDutyRecord}', [SeaDutyRecordController::class, 'destroy'])->name('seaDutyRecords.destroy');
+    Route::patch('/seaDutyRecords/{seaDutyRecord}/status', [SeaDutyRecordController::class, 'updateStatus'])->name('seaDutyRecords.updateStatus');
 
 
     Route::get('/personal_data', function () {

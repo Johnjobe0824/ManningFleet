@@ -13,7 +13,10 @@ use Inertia\Response;
 use App\Models\{
     Rank,
     Document,
-    Certification
+    Certification,
+    SeaDutyRecord,
+    Vessel,
+    Position 
 };
 
 class ProfileController extends Controller
@@ -29,6 +32,16 @@ class ProfileController extends Controller
          // Get the user's documents (assuming the relation exists, e.g. user has many documents)
         $documents = Document::where('user_id', $request->user()->id)->get();
         $certificates = Certification::where('user_id', $request->user()->id)->get();
+        $vessels = Vessel::with([
+                        'assignedPositions:id,vessel_id,position_id', 
+                        'assignedPositions.position:id,name'
+                    ])->select('id', 'vessel_name')->get();
+
+
+        $seaDutyRecords = SeaDutyRecord::with(['vessel', 'position'])
+            ->where('user_id', $request->user()->id)
+            ->latest()
+            ->get();
                 
         return Inertia::render('Profile/Edit', [
             'mustVerifyEmail' => $request->user() instanceof MustVerifyEmail,
@@ -36,7 +49,9 @@ class ProfileController extends Controller
             'user' => $request->user(),
             'ranks' => $ranks,
             'documents' => $documents,
-            'certificates' => $certificates
+            'certificates' => $certificates,
+            'seaDutyRecords' => $seaDutyRecords,
+            'vessels' => $vessels,
         ]);
     }
 

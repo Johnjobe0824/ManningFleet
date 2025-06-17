@@ -174,8 +174,7 @@ const getFileIcon = (path) => {
                 :key="index"
                 class="col-span-12 sm:col-span-6 md:col-span-4 xl:col-span-4 p-2"
                 >
-                <div
-                    :class="['p-6 rounded border flex flex-col justify-between', statusBorderClass(item.status)]"
+                <div :class="['p-6 rounded border flex flex-col justify-between', statusBorderClass(item.status)]"
                     style="height: 100%; min-height: 320px;" >
                     <div class="flex justify-center rounded p-4">
                     <div class="relative mx-auto">

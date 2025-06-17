@@ -18,7 +18,9 @@ const model = ref([
     {
         // label: 'Master',
         items: [
-            { label: 'Document', icon: 'pi pi-fw pi-user', to: '/documents', can:'read document' },
+            { label: 'Sea Duty Record', icon: 'pi pi-fw pi-file', to: '/seaDutyRecords', can:'read sea_duty' },
+            { label: 'Document', icon: 'pi pi-fw pi-file', to: '/documents', can:'read document' },
+            { label: 'Training and Certification', icon: 'pi pi-fw pi-file', to: '/certificates', can:'read certificate' },
             { label: 'User', icon: 'pi pi-fw pi-user', to: '/user', can:'read user' }
         ]
 

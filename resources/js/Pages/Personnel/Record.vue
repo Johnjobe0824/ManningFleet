@@ -29,7 +29,9 @@ const props = defineProps({
     ranks: Object,
     documents: Object,
     certificates: Object,
-    user: Object
+    seaDutyRecords: Object,
+    user: Object,
+    vessels: Array 
 });
 
 
@@ -38,6 +40,8 @@ const emit = defineEmits(["close"]);
 
 const certificates = computed(() => usePage().props.certificates);
 const documents = computed(() => usePage().props.documents);
+const seaDutyRecords = computed(() => usePage().props.seaDutyRecords);
+const vessels = computed(() => usePage().props.vessels);
 const ranks = computed(() => usePage().props.ranks);
 const user = computed(() => usePage().props.user);
 
@@ -50,7 +54,12 @@ const tabs = computed(() => [
   },
   {
     label: 'Sea-Duty Record',
-    component: ServiceRecord
+    component: ServiceRecord,
+     props: {
+      seaDutyRecords: seaDutyRecords.value,
+      user: user.value,
+      vessels: vessels.value, 
+    } 
   },
   {
     label: 'Documents',
@@ -60,7 +69,6 @@ const tabs = computed(() => [
   {
     label: 'Training & Certification',
     component: Certificates,
-    props: { certificates: certificates.value, user: user.value }
   },
   {
     label: 'Assessment',
