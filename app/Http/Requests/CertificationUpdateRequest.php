@@ -21,13 +21,13 @@ class CertificationUpdateRequest extends FormRequest
      */
     public function rules(): array
     {
-        
+
         return [
             'name' => 'required|string|max:255',
             'training_center' => 'required|string|max:255',
             'batch_no' => 'required|string|max:255',
             'date' => 'required|string|max:255',
-            'user_id' => ['required','exists:users,id'],
+            'user_id' => ['required', 'exists:users,id'],
             'status' => 'nullable|in:pending,approved,rejected',
         ];
     }

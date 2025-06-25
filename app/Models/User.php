@@ -3,20 +3,15 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Laravel\Sanctum\HasApiTokens;
-use Spatie\Permission\Traits\HasRoles;
-use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use App\Models\{
-    Role,
-    PersonalInformation,
-    UserPhoto
-};
+use Illuminate\Notifications\Notifiable;
+use Laravel\Sanctum\HasApiTokens;
+use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable, HasRoles;
+    use HasApiTokens, HasFactory, HasRoles, Notifiable;
 
     /**
      * The attributes that are mass assignable.
@@ -49,7 +44,7 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
-    protected $with = ['personal_info','photo'];
+    protected $with = ['personal_info', 'photo'];
 
     public function getCreatedAtAttribute()
     {
@@ -63,7 +58,7 @@ class User extends Authenticatable
 
     public function getEmailVerifiedAtAttribute()
     {
-        return $this->attributes['email_verified_at'] == null ? null:date('d-m-Y H:i', strtotime($this->attributes['email_verified_at']));
+        return $this->attributes['email_verified_at'] == null ? null : date('d-m-Y H:i', strtotime($this->attributes['email_verified_at']));
     }
 
     public function getPermissionArray()
@@ -82,5 +77,4 @@ class User extends Authenticatable
     {
         return $this->hasOne(UserPhoto::class);
     }
-
 }

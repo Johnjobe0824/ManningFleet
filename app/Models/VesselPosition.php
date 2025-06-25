@@ -13,7 +13,7 @@ class VesselPosition extends Model
         'vessel_id',
         'position_id',
         'status',
-        'user_id'
+        'user_id',
     ];
 
     protected $with = ['position'];
@@ -27,7 +27,6 @@ class VesselPosition extends Model
     {
         return date('d-m-Y H:i', strtotime($this->attributes['updated_at']));
     }
-
 
     public function vessel()
     {

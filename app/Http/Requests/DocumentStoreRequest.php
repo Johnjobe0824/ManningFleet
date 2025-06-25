@@ -23,7 +23,7 @@ class DocumentStoreRequest extends FormRequest
     {
         return [
             'name' => 'required|string|max:255',
-            'user_id' => ['required','exists:users,id'],
+            'user_id' => ['required', 'exists:users,id'],
             'file' => 'required|file|mimes:jpg,jpeg,png,pdf,docx|max:10240',
             'status' => 'nullable|in:pending,approved,rejected',
         ];

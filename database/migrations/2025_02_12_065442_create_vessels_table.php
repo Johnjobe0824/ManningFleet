@@ -1,11 +1,9 @@
 <?php
 
+use App\Models\Vessel;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-use App\Models\{
-    Vessel
-};
 
 return new class extends Migration
 {
@@ -21,7 +19,7 @@ return new class extends Migration
             $table->enum('category', [Vessel::I, Vessel::II, Vessel::III])->default(Vessel::I);
             $table->enum('status', [Vessel::RFS, Vessel::NRFS])->default(Vessel::NRFS);
             $table->string('size');
-            $table->softDeletes(); 
+            $table->softDeletes();
             $table->timestamps();
         });
     }

@@ -2,20 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Certification;
-use Illuminate\Http\Request;
-
-use Illuminate\Support\Facades\DB;
 use App\Http\Requests\CertificationIndexRequest;
 use App\Http\Requests\CertificationStoreRequest;
 use App\Http\Requests\CertificationUpdateRequest;
-use Spatie\Permission\Models\Permission;
-use Inertia\Inertia;
+use App\Models\Certification;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+use Inertia\Inertia;
+use Spatie\Permission\Models\Permission;
 
 class CertificationController extends Controller
 {
-
     public function __construct()
     {
 
@@ -24,6 +22,7 @@ class CertificationController extends Controller
         $this->middleware('permission:update certificate', ['only' => ['edit', 'update']]);
         $this->middleware('permission:delete certificate', ['only' => ['destroy', 'destroyBulk']]);
     }
+
     /**
      * Display a listing of the resource.
      */
@@ -31,21 +30,21 @@ class CertificationController extends Controller
     {
         $certificates = Certification::query();
         if ($request->has('search')) {
-            $certificates->where('name', 'LIKE', "%" . $request->search . "%");
-            $certificates->where('training_center', 'LIKE', "%" . $request->search . "%");
-            $certificates->where('batch_no', 'LIKE', "%" . $request->search . "%");
-            $certificates->where('date', 'LIKE', "%" . $request->search . "%");
-            $certificates->orWhere('status', 'LIKE', "%" . $request->search . "%");
+            $certificates->where('name', 'LIKE', '%'.$request->search.'%');
+            $certificates->where('training_center', 'LIKE', '%'.$request->search.'%');
+            $certificates->where('batch_no', 'LIKE', '%'.$request->search.'%');
+            $certificates->where('date', 'LIKE', '%'.$request->search.'%');
+            $certificates->orWhere('status', 'LIKE', '%'.$request->search.'%');
         }
 
         if ($request->has(['field', 'order'])) {
             $certificates->orderBy($request->field, $request->order);
         }
-        
+
         return Inertia::render('Certifications/Index', [
-            'title'         => "Training & Certifications",
-            'filters'       => $request->all(['search', 'field', 'order']),
-            'certificates'         => $certificates->paginate(10),
+            'title' => 'Training & Certifications',
+            'filters' => $request->all(['search', 'field', 'order']),
+            'certificates' => $certificates->paginate(10),
         ]);
     }
 
@@ -64,7 +63,7 @@ class CertificationController extends Controller
     {
         DB::beginTransaction();
         try {
-    
+
             $certificate = Certification::create([
                 'user_id' => $request->user_id,
                 'name' => $request->name,
@@ -73,14 +72,15 @@ class CertificationController extends Controller
                 'date' => $request->date,
                 'status' => $request->status,
             ]);
-    
+
             DB::commit();
-            return back()->with('success', $certificate->name. ' added successfully.');
+
+            return back()->with('success', $certificate->name.' added successfully.');
         } catch (\Throwable $th) {
             DB::rollBack();
-    
+
             return response()->json([
-                'message' => 'Error creating certificate: ' . $th->getMessage(),
+                'message' => 'Error creating certificate: '.$th->getMessage(),
             ], 500);
         }
     }
@@ -110,17 +110,19 @@ class CertificationController extends Controller
         DB::beginTransaction();
         try {
             $certificate->update([
-                'name'          => $request->name,
+                'name' => $request->name,
                 'training_center' => $request->training_center,
-                'batch_no'          => $request->batch_no,
-                'status'    => $request->status,
-                'date'  => $request->date
+                'batch_no' => $request->batch_no,
+                'status' => $request->status,
+                'date' => $request->date,
             ]);
             DB::commit();
-            return back()->with('success', $certificate->name. ' updated successfully.');
+
+            return back()->with('success', $certificate->name.' updated successfully.');
         } catch (\Throwable $th) {
             DB::rollback();
-            return back()->with('error', 'Error updating ' .  $th->getMessage());
+
+            return back()->with('error', 'Error updating '.$th->getMessage());
         }
     }
 
@@ -132,9 +134,10 @@ class CertificationController extends Controller
         //
         try {
             $rank->delete();
-            return back()->with('success', $certificate->name. ' deleted successfully.');
+
+            return back()->with('success', $certificate->name.' deleted successfully.');
         } catch (\Throwable $th) {
-            return back()->with('error', 'Error deleting ' . $certificate->name . $th->getMessage());
+            return back()->with('error', 'Error deleting '.$certificate->name.$th->getMessage());
         }
     }
 
@@ -152,6 +155,4 @@ class CertificationController extends Controller
             'status' => $certificate->status,
         ]);
     }
-
-    
 }

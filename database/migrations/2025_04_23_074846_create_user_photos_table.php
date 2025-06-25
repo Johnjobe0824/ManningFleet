@@ -16,11 +16,11 @@ return new class extends Migration
             $table->unsignedBigInteger('user_id');
             $table->string('photo_path'); // where the photo is stored
             $table->timestamps();
-        
+
             // Add foreign key constraint
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
-        
+
     }
 
     /**

@@ -22,17 +22,16 @@ class SeaDutyRecordStoreRequest extends FormRequest
     public function rules()
     {
         return [
-            'user_id'     => ['required', 'exists:users,id'],
-            'vessel_id'   => ['required', 'exists:vessels,id'],
+            'user_id' => ['required', 'exists:users,id'],
+            'vessel_id' => ['required', 'exists:vessels,id'],
             'position_id' => ['required', 'exists:positions,id'],
-            'date_from'   => ['required', 'date'],
-            'date_to'     => ['required', 'date', 'after_or_equal:date_from'],
-            'authority'   => ['required', 'string', 'max:255'],
-            'tst'         => ['required', 'string', 'max:255'],
-            'tmc'         => ['required', 'string', 'max:255'],
-            'status'      => ['required', 'in:Pending,Approved,Rejected'],
-            'is_active'   => ['nullable', 'boolean'],
+            'date_from' => ['required', 'date'],
+            'date_to' => ['required', 'date', 'after_or_equal:date_from'],
+            'authority' => ['required', 'string', 'max:255'],
+            'tst' => ['required', 'string', 'max:255'],
+            'tmc' => ['required', 'string', 'max:255'],
+            'status' => ['required', 'in:Pending,Approved,Rejected'],
+            'is_active' => ['nullable', 'boolean'],
         ];
     }
-
 }

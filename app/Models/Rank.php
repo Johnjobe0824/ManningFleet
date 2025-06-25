@@ -5,22 +5,21 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use App\Models\{
-    PersonalInformation
-};
 
 class Rank extends Model
 {
     use HasFactory, SoftDeletes;
 
     const OFFICER = 'Officer';
+
     const NON_OFFICER = 'Non-Officer';
+
     const NUP_CIVILIAN = 'NUP-Civilian';
 
     protected $fillable = [
         'level',
         'name',
-        'type'
+        'type',
     ];
 
     public function getCreatedAtAttribute()

@@ -5,10 +5,6 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use App\Models\{
-    Rank,
-    User
-};
 
 class PersonalInformation extends Model
 {
@@ -26,7 +22,7 @@ class PersonalInformation extends Model
         'civil_status',
         'user_id',
         'age',
-        'birth_date'
+        'birth_date',
     ];
 
     protected $with = ['rank'];
@@ -51,8 +47,8 @@ class PersonalInformation extends Model
         return date('d-m-Y H:i', strtotime($this->attributes['updated_at']));
     }
 
-    public function user(){
+    public function user()
+    {
         return $this->belongsTo(User::class);
     }
-
 }

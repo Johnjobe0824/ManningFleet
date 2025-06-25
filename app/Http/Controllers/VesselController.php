@@ -2,22 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\{
-    Vessel,
-    Position,
-    VesselPosition
-};
-use Inertia\Inertia;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use App\Http\Requests\VesselIndexRequest;
 use App\Http\Requests\VesselStoreRequest;
 use App\Http\Requests\VesselUpdateRequest;
-use Spatie\Permission\Models\Permission;
+use App\Models\Position;
+use App\Models\Vessel;
+use App\Models\VesselPosition;
+use Illuminate\Support\Facades\DB;
+use Inertia\Inertia;
 
 class VesselController extends Controller
 {
-
     public function __construct()
     {
 
@@ -26,6 +21,7 @@ class VesselController extends Controller
         $this->middleware('permission:update vessel', ['only' => ['edit', 'update']]);
         $this->middleware('permission:delete vessel', ['only' => ['destroy', 'destroyBulk']]);
     }
+
     /**
      * Display a listing of the resource.
      */
@@ -33,21 +29,21 @@ class VesselController extends Controller
     {
         $vessels = Vessel::query();
         if ($request->has('search')) {
-            $vessels->where('vessel_name', 'LIKE', "%" . $request->search . "%");
-            $vessels->orWhere('vessel_bow_no', 'LIKE', "%" . $request->search . "%");
-            $vessels->orWhere('category', 'LIKE', "%" . $request->search . "%");
-            $vessels->orWhere('size', 'LIKE', "%" . $request->search . "%");
-            $vessels->orWhere('status', 'LIKE', "%" . $request->search . "%");
+            $vessels->where('vessel_name', 'LIKE', '%'.$request->search.'%');
+            $vessels->orWhere('vessel_bow_no', 'LIKE', '%'.$request->search.'%');
+            $vessels->orWhere('category', 'LIKE', '%'.$request->search.'%');
+            $vessels->orWhere('size', 'LIKE', '%'.$request->search.'%');
+            $vessels->orWhere('status', 'LIKE', '%'.$request->search.'%');
         }
 
         if ($request->has(['field', 'order'])) {
             $vessels->orderBy($request->field, $request->order);
         }
-        
+
         return Inertia::render('Vessel/Index', [
-            'title'         => "Vessel",
-            'filters'       => $request->all(['search', 'field', 'order']),
-            'vessels'         => $vessels->paginate(10),
+            'title' => 'Vessel',
+            'filters' => $request->all(['search', 'field', 'order']),
+            'vessels' => $vessels->paginate(10),
         ]);
     }
 
@@ -68,13 +64,12 @@ class VesselController extends Controller
         DB::beginTransaction();
         try {
 
-            
             $vessel = Vessel::create([
-                'vessel_name'   => $request->vessel_name,
+                'vessel_name' => $request->vessel_name,
                 'vessel_bow_no' => $request->vessel_bow_no,
-                'category'  => $request->category,
-                'size'  => $request->size,
-                'status' => $request->status
+                'category' => $request->category,
+                'size' => $request->size,
+                'status' => $request->status,
             ]);
 
             // automatic create position in vessel_positions table
@@ -82,17 +77,19 @@ class VesselController extends Controller
 
             foreach ($defaultPositions as $position) {
                 VesselPosition::create([
-                    'vessel_id'   => $vessel->id,
+                    'vessel_id' => $vessel->id,
                     'position_id' => $position->id,
-                    'status'      => 'available',
+                    'status' => 'available',
                 ]);
             }
 
             DB::commit();
-            return back()->with('success', $vessel->vessel_name. ' created successfully.');
+
+            return back()->with('success', $vessel->vessel_name.' created successfully.');
         } catch (\Throwable $th) {
             DB::rollback();
-            return back()->with('error', 'Error creating ' .  $th->getMessage());
+
+            return back()->with('error', 'Error creating '.$th->getMessage());
         }
     }
 
@@ -121,17 +118,19 @@ class VesselController extends Controller
         DB::beginTransaction();
         try {
             $vessel->update([
-                'vessel_name'   => $request->vessel_name,
+                'vessel_name' => $request->vessel_name,
                 'vessel_bow_no' => $request->vessel_bow_no,
-                'category'  => $request->category,
-                'size'  => $request->size,
-                'status' => $request->status
+                'category' => $request->category,
+                'size' => $request->size,
+                'status' => $request->status,
             ]);
             DB::commit();
-            return back()->with('success', $vessel->vessel_name. ' updated successfully.');
+
+            return back()->with('success', $vessel->vessel_name.' updated successfully.');
         } catch (\Throwable $th) {
             DB::rollback();
-            return back()->with('error', 'Error updating ' . $vessel->vessel_name. $th->getMessage());
+
+            return back()->with('error', 'Error updating '.$vessel->vessel_name.$th->getMessage());
         }
     }
 
@@ -143,9 +142,10 @@ class VesselController extends Controller
         //
         try {
             $vessel->delete();
-            return back()->with('success', $vessel->vessel_name. ' deleted successfully.');
+
+            return back()->with('success', $vessel->vessel_name.' deleted successfully.');
         } catch (\Throwable $th) {
-            return back()->with('error', 'Error deleting ' . $vessel->vessel_name . $th->getMessage());
+            return back()->with('error', 'Error deleting '.$vessel->vessel_name.$th->getMessage());
         }
     }
 }

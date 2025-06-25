@@ -5,28 +5,27 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use App\Models\{
-    Position,
-    VesselPosition
-};
 
 class Vessel extends Model
 {
     use HasFactory, SoftDeletes;
 
     const I = 'Category I';
+
     const II = 'Category II';
+
     const III = 'Category III';
 
-    const RFS = "Ready For Sea";
-    const NRFS = "Not Ready For Sea";
+    const RFS = 'Ready For Sea';
+
+    const NRFS = 'Not Ready For Sea';
 
     protected $fillable = [
         'vessel_name',
         'vessel_bow_no',
         'category',
         'size',
-        'status'
+        'status',
     ];
 
     protected $with = ['assignedPositions'];
@@ -45,4 +44,4 @@ class Vessel extends Model
     {
         return $this->hasMany(VesselPosition::class);
     }
- }
+}

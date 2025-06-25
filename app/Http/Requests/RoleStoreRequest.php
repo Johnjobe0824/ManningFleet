@@ -24,7 +24,7 @@ class RoleStoreRequest extends FormRequest
     {
         return [
             'name' => 'required|string|max:255|unique:'.Role::class,
-            'permissions'   => ['required', 'array'],
+            'permissions' => ['required', 'array'],
         ];
     }
 }

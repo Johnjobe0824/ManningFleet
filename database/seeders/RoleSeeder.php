@@ -4,7 +4,6 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Role;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 class RoleSeeder extends Seeder
 {
@@ -14,7 +13,7 @@ class RoleSeeder extends Seeder
     public function run(): void
     {
         $superadmin = Role::create([
-            'name'          => 'superadmin'
+            'name' => 'superadmin',
         ]);
         $superadmin->givePermissionTo([
             'delete user',
@@ -28,10 +27,10 @@ class RoleSeeder extends Seeder
             'delete permission',
             'update permission',
             'read permission',
-            'create permission'
+            'create permission',
         ]);
         $admin = Role::create([
-            'name'          => 'admin'
+            'name' => 'admin',
         ]);
         $admin->givePermissionTo([
             'delete user',
@@ -42,9 +41,9 @@ class RoleSeeder extends Seeder
             'read permission',
         ]);
         $operator = Role::create([
-            'name'          => 'operator'
+            'name' => 'operator',
         ]);
-        
+
         $operator->givePermissionTo([
             'read user',
             'create user',
@@ -52,11 +51,10 @@ class RoleSeeder extends Seeder
             'read permission',
         ]);
 
-
         $officer = Role::create([
-            'name'          => 'officer'
+            'name' => 'officer',
         ]);
-        
+
         $officer->givePermissionTo([
             'read profile',
         ]);

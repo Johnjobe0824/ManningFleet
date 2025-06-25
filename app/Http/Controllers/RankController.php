@@ -2,14 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Rank;
-use Inertia\Inertia;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use App\Http\Requests\RankIndexRequest;
 use App\Http\Requests\RankStoreRequest;
 use App\Http\Requests\RankUpdateRequest;
-use Spatie\Permission\Models\Permission;
+use App\Models\Rank;
+use Illuminate\Support\Facades\DB;
+use Inertia\Inertia;
 
 class RankController extends Controller
 {
@@ -21,6 +19,7 @@ class RankController extends Controller
         $this->middleware('permission:update rank', ['only' => ['edit', 'update']]);
         $this->middleware('permission:delete rank', ['only' => ['destroy', 'destroyBulk']]);
     }
+
     /**
      * Display a listing of the resource.
      */
@@ -28,18 +27,18 @@ class RankController extends Controller
     {
         $ranks = Rank::query();
         if ($request->has('search')) {
-            $ranks->where('name', 'LIKE', "%" . $request->search . "%");
-            $ranks->orWhere('type', 'LIKE', "%" . $request->search . "%");
+            $ranks->where('name', 'LIKE', '%'.$request->search.'%');
+            $ranks->orWhere('type', 'LIKE', '%'.$request->search.'%');
         }
 
         if ($request->has(['field', 'order'])) {
             $ranks->orderBy($request->field, $request->order);
         }
-        
+
         return Inertia::render('Rank/Index', [
-            'title'         => "Rank",
-            'filters'       => $request->all(['search', 'field', 'order']),
-            'ranks'         => $ranks->paginate(10),
+            'title' => 'Rank',
+            'filters' => $request->all(['search', 'field', 'order']),
+            'ranks' => $ranks->paginate(10),
         ]);
     }
 
@@ -60,16 +59,18 @@ class RankController extends Controller
         DB::beginTransaction();
         try {
             $rank = Rank::create([
-                'name'          => $request->name,
-                'type'          => $request->type
+                'name' => $request->name,
+                'type' => $request->type,
             ]);
             $rankId = $rank->id;
             $rank->update(['level' => $rankId]);
             DB::commit();
-            return back()->with('success', $rank->name. ' created successfully.');
+
+            return back()->with('success', $rank->name.' created successfully.');
         } catch (\Throwable $th) {
             DB::rollback();
-            return back()->with('error', 'Error creating ' .  $th->getMessage());
+
+            return back()->with('error', 'Error creating '.$th->getMessage());
         }
     }
 
@@ -87,7 +88,7 @@ class RankController extends Controller
     public function edit(Rank $rank)
     {
         //
-       
+
     }
 
     /**
@@ -99,14 +100,16 @@ class RankController extends Controller
         DB::beginTransaction();
         try {
             $rank->update([
-                'name'          => $request->name,
-                'type'          => $request->type
+                'name' => $request->name,
+                'type' => $request->type,
             ]);
             DB::commit();
-            return back()->with('success', $rank->name. ' updated successfully.');
+
+            return back()->with('success', $rank->name.' updated successfully.');
         } catch (\Throwable $th) {
             DB::rollback();
-            return back()->with('error', 'Error updating ' .  $th->getMessage());
+
+            return back()->with('error', 'Error updating '.$th->getMessage());
         }
     }
 
@@ -118,9 +121,10 @@ class RankController extends Controller
         //
         try {
             $rank->delete();
-            return back()->with('success', $rank->name. ' deleted successfully.');
+
+            return back()->with('success', $rank->name.' deleted successfully.');
         } catch (\Throwable $th) {
-            return back()->with('error', 'Error deleting ' . $rank->name . $th->getMessage());
+            return back()->with('error', 'Error deleting '.$rank->name.$th->getMessage());
         }
     }
 }

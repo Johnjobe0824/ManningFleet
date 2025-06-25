@@ -2,25 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\{
-    Position,
-    Vessel,
-    VesselPosition
-};
-use Illuminate\Http\Request;
-
-use Inertia\Inertia;
+use App\Http\Requests\PositionIndexRequest;
+use App\Http\Requests\PositionStoreRequest;
+use App\Http\Requests\PositionUpdateRequest;
+use App\Models\Position;
+use App\Models\Vessel;
+use App\Models\VesselPosition;
 use Illuminate\Support\Facades\DB;
-use App\Http\Requests\{
-    PositionIndexRequest,
-    PositionStoreRequest,
-    PositionUpdateRequest
-};
-use Spatie\Permission\Models\Permission;
+use Inertia\Inertia;
 
 class PositionController extends Controller
 {
-
     public function __construct()
     {
 
@@ -37,18 +29,18 @@ class PositionController extends Controller
     {
         $positions = Position::query();
         if ($request->has('search')) {
-            $positions->where('name', 'LIKE', "%" . $request->search . "%");
-            $positions->orWhere('code', 'LIKE', "%" . $request->search . "%");
+            $positions->where('name', 'LIKE', '%'.$request->search.'%');
+            $positions->orWhere('code', 'LIKE', '%'.$request->search.'%');
         }
 
         if ($request->has(['field', 'order'])) {
             $positions->orderBy($request->field, $request->order);
         }
-        
+
         return Inertia::render('Position/Index', [
-            'title'         => "Position",
-            'filters'       => $request->all(['search', 'field', 'order']),
-            'positions'         => $positions->paginate(10),
+            'title' => 'Position',
+            'filters' => $request->all(['search', 'field', 'order']),
+            'positions' => $positions->paginate(10),
         ]);
     }
 
@@ -69,8 +61,8 @@ class PositionController extends Controller
         DB::beginTransaction();
         try {
             $position = Position::create([
-                'name'          => $request->name,
-                'code'          => $request->code
+                'name' => $request->name,
+                'code' => $request->code,
             ]);
 
             // Now, assign this position to all existing vessels
@@ -78,17 +70,19 @@ class PositionController extends Controller
 
             foreach ($vessels as $vessel) {
                 VesselPosition::create([
-                    'vessel_id'   => $vessel->id,
+                    'vessel_id' => $vessel->id,
                     'position_id' => $position->id,
-                    'status'      => 'available', // or 'occupied'
+                    'status' => 'available', // or 'occupied'
                 ]);
             }
 
             DB::commit();
-            return back()->with('success', $position->name. ' created successfully.');
+
+            return back()->with('success', $position->name.' created successfully.');
         } catch (\Throwable $th) {
             DB::rollback();
-            return back()->with('error', 'Error creating ' .  $th->getMessage());
+
+            return back()->with('error', 'Error creating '.$th->getMessage());
         }
     }
 
@@ -117,14 +111,16 @@ class PositionController extends Controller
         DB::beginTransaction();
         try {
             $position->update([
-                'name'          => $request->name,
-                'code'          => $request->code
+                'name' => $request->name,
+                'code' => $request->code,
             ]);
             DB::commit();
-            return back()->with('success', $position->name. ' updated successfully.');
+
+            return back()->with('success', $position->name.' updated successfully.');
         } catch (\Throwable $th) {
             DB::rollback();
-            return back()->with('error', 'Error updating ' .  $th->getMessage());
+
+            return back()->with('error', 'Error updating '.$th->getMessage());
         }
     }
 
@@ -138,9 +134,10 @@ class PositionController extends Controller
             // Delete all related VesselPosition records where the position is assigned
             $position->vesselPositions()->delete();
             $position->delete();
-            return back()->with('success', $position->name. ' deleted successfully.');
+
+            return back()->with('success', $position->name.' deleted successfully.');
         } catch (\Throwable $th) {
-            return back()->with('error', 'Error deleting ' . $position->name . $th->getMessage());
+            return back()->with('error', 'Error deleting '.$position->name.$th->getMessage());
         }
     }
 }

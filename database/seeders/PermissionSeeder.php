@@ -4,7 +4,6 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Permission;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 class PermissionSeeder extends Seeder
 {
@@ -15,7 +14,7 @@ class PermissionSeeder extends Seeder
     {
         $resources = [
             'user', 'role', 'permission', 'rank', 'vessel',
-            'position', 'sea_duty', 'document', 'training', 'profile',
+            'position', 'sea_duty', 'document', 'training', 'profile', 'chipsReport',
         ];
 
         $actions = ['create', 'read', 'update', 'delete'];

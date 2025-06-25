@@ -22,8 +22,8 @@ class UserPhotoStoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'user_id' => ['required','exists:users,id'],
-            'photo_path' => 'required|image|mimes:jpg,jpeg,png|max:2048'
+            'user_id' => ['required', 'exists:users,id'],
+            'photo_path' => 'required|image|mimes:jpg,jpeg,png|max:2048',
         ];
     }
 }

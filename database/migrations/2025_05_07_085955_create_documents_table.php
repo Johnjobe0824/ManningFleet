@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('path');
             $table->enum('status', ['pending', 'approved', 'rejected'])->default('pending');
-            $table->softDeletes(); 
+            $table->softDeletes();
             $table->timestamps();
         });
     }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileUpdateRequest;
+use App\Models\{ Certification, ChipsReport, Document, Rank, SeaDutyRecord, Vessel, User };
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -10,14 +11,6 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 use Inertia\Response;
-use App\Models\{
-    Rank,
-    Document,
-    Certification,
-    SeaDutyRecord,
-    Vessel,
-    Position 
-};
 
 class ProfileController extends Controller
 {
@@ -29,26 +22,27 @@ class ProfileController extends Controller
 
         $ranks = Rank::whereType('Officer')->get();
 
-         // Get the user's documents (assuming the relation exists, e.g. user has many documents)
-        $documents = Document::where('user_id', $request->user()->id)->get();
-        $certificates = Certification::where('user_id', $request->user()->id)->get();
+        // Get the user's documents (assuming the relation exists, e.g. user has many documents)
+        $documents = Document::where('user_id', $request->user()->id)->latest()->get();
+        $chipsReports = ChipsReport::where('user_id', $request->user()->id)->latest()->get();
+        $certificates = Certification::where('user_id', $request->user()->id)->latest()->get();
         $vessels = Vessel::with([
-                        'assignedPositions:id,vessel_id,position_id', 
-                        'assignedPositions.position:id,name'
-                    ])->select('id', 'vessel_name')->get();
-
+            'assignedPositions:id,vessel_id,position_id',
+            'assignedPositions.position:id,name',
+        ])->select('id', 'vessel_name')->get();
 
         $seaDutyRecords = SeaDutyRecord::with(['vessel', 'position'])
             ->where('user_id', $request->user()->id)
             ->latest()
             ->get();
-                
+
         return Inertia::render('Profile/Edit', [
             'mustVerifyEmail' => $request->user() instanceof MustVerifyEmail,
             'status' => session('status'),
             'user' => $request->user(),
             'ranks' => $ranks,
             'documents' => $documents,
+            'chipsReports' => $chipsReports,
             'certificates' => $certificates,
             'seaDutyRecords' => $seaDutyRecords,
             'vessels' => $vessels,

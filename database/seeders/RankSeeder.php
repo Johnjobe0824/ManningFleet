@@ -2,10 +2,9 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
-use Illuminate\Database\Seeder;
 use App\Models\Rank;
 use Carbon\Carbon;
+use Illuminate\Database\Seeder;
 
 class RankSeeder extends Seeder
 {
@@ -26,7 +25,7 @@ class RankSeeder extends Seeder
             ['level' => 8, 'name' => 'LT', 'type' => Rank::OFFICER, 'created_at' => Carbon::now()->format('Y-m-d H:i:s'), 'updated_at' => Carbon::now()->format('Y-m-d H:i:s')],
             ['level' => 9, 'name' => 'LTJG', 'type' => Rank::OFFICER, 'created_at' => Carbon::now()->format('Y-m-d H:i:s'), 'updated_at' => Carbon::now()->format('Y-m-d H:i:s')],
             ['level' => 10, 'name' => 'ENS', 'type' => Rank::OFFICER, 'created_at' => Carbon::now()->format('Y-m-d H:i:s'), 'updated_at' => Carbon::now()->format('Y-m-d H:i:s')],
-            ['level' => 11, 'name' => 'P/ENS', 'type' => Rank::OFFICER, 'created_at' => Carbon::now()->format('Y-m-d H:i:s'), 'updated_at' => Carbon::now()->format('Y-m-d H:i:s')]
+            ['level' => 11, 'name' => 'P/ENS', 'type' => Rank::OFFICER, 'created_at' => Carbon::now()->format('Y-m-d H:i:s'), 'updated_at' => Carbon::now()->format('Y-m-d H:i:s')],
         ]);
 
         Rank::insert([
@@ -42,7 +41,7 @@ class RankSeeder extends Seeder
             ['level' => 21, 'name' => 'SW2', 'type' => Rank::NON_OFFICER, 'created_at' => Carbon::now()->format('Y-m-d H:i:s'), 'updated_at' => Carbon::now()->format('Y-m-d H:i:s')],
             ['level' => 22, 'name' => 'ASN', 'type' => Rank::NON_OFFICER, 'created_at' => Carbon::now()->format('Y-m-d H:i:s'), 'updated_at' => Carbon::now()->format('Y-m-d H:i:s')],
             ['level' => 23, 'name' => 'ASW', 'type' => Rank::NON_OFFICER, 'created_at' => Carbon::now()->format('Y-m-d H:i:s'), 'updated_at' => Carbon::now()->format('Y-m-d H:i:s')],
-            ['level' => 24, 'name' => 'CGNO', 'type' => Rank::NON_OFFICER, 'created_at' => Carbon::now()->format('Y-m-d H:i:s'), 'updated_at' => Carbon::now()->format('Y-m-d H:i:s')]
+            ['level' => 24, 'name' => 'CGNO', 'type' => Rank::NON_OFFICER, 'created_at' => Carbon::now()->format('Y-m-d H:i:s'), 'updated_at' => Carbon::now()->format('Y-m-d H:i:s')],
         ]);
     }
 }

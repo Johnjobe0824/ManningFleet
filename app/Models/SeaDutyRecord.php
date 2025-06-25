@@ -5,11 +5,6 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use App\Models\{
-    User,
-    Vessel,
-    Position
-};
 
 class SeaDutyRecord extends Model
 {
@@ -25,7 +20,7 @@ class SeaDutyRecord extends Model
         'tst',
         'tmc',
         'status',
-        'is_active'
+        'is_active',
     ];
 
     // Relationships

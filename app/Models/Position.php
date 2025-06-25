@@ -5,9 +5,6 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use App\Models\{
-    VesselPosition
-};
 
 class Position extends Model
 {
@@ -15,7 +12,7 @@ class Position extends Model
 
     protected $fillable = [
         'code',
-        'name'
+        'name',
     ];
 
     public function getCreatedAtAttribute()

@@ -5,7 +5,6 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-
 class VesselUpdateRequest extends FormRequest
 {
     /**
@@ -36,5 +35,4 @@ class VesselUpdateRequest extends FormRequest
             'status' => 'required|string|max:255',
         ];
     }
-    
 }

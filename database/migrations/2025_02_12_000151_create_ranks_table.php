@@ -1,11 +1,9 @@
 <?php
 
+use App\Models\Rank;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-use App\Models\{
-    Rank
-};
 
 return new class extends Migration
 {
@@ -19,7 +17,7 @@ return new class extends Migration
             $table->integer('level')->nullable();
             $table->string('name');
             $table->enum('type', [Rank::OFFICER, Rank::NON_OFFICER, Rank::NUP_CIVILIAN])->default(Rank::NON_OFFICER);
-            $table->softDeletes(); 
+            $table->softDeletes();
             $table->timestamps();
         });
     }

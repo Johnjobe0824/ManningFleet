@@ -2,7 +2,6 @@
 
 namespace App\Http\Requests;
 
-use App\Models\Vessel;
 use Illuminate\Foundation\Http\FormRequest;
 
 class VesselStoreRequest extends FormRequest

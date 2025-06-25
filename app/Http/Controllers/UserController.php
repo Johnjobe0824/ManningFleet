@@ -2,15 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
-use Inertia\Inertia;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use Spatie\Permission\Models\Role;
-use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\UserIndexRequest;
 use App\Http\Requests\UserStoreRequest;
 use App\Http\Requests\UserUpdateRequest;
+use App\Models\User;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
+use Inertia\Inertia;
+use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 {
@@ -37,8 +36,8 @@ class UserController extends Controller
         });
 
         if ($request->has('search')) {
-            $users->where('name', 'LIKE', "%" . $request->search . "%");
-            $users->orWhere('email', 'LIKE', "%" . $request->search . "%");
+            $users->where('name', 'LIKE', '%'.$request->search.'%');
+            $users->orWhere('email', 'LIKE', '%'.$request->search.'%');
         }
         if ($request->has(['field', 'order'])) {
             $users->orderBy($request->field, $request->order);
@@ -53,10 +52,10 @@ class UserController extends Controller
         }
 
         return Inertia::render('User/Index', [
-            'title'         => 'User',
-            'filters'       => $request->all(['search', 'field', 'order']),
-            'users'         => $users->with('roles')->paginate(10),
-            'roles'         => $roles,
+            'title' => 'User',
+            'filters' => $request->all(['search', 'field', 'order']),
+            'users' => $users->with('roles')->paginate(10),
+            'roles' => $roles,
         ]);
     }
 
@@ -71,10 +70,12 @@ class UserController extends Controller
             ]);
             $user->assignRole($request->role);
             DB::commit();
-            return back()->with('success', $user->name. ' created successfully.');
+
+            return back()->with('success', $user->name.' created successfully.');
         } catch (\Throwable $th) {
             DB::rollback();
-            return back()->with('error', 'Error creating ' . $user->name . $th->getMessage());
+
+            return back()->with('error', 'Error creating '.$user->name.$th->getMessage());
         }
     }
 
@@ -84,16 +85,18 @@ class UserController extends Controller
         try {
             $user = User::findOrFail($id);
             $user->update([
-                'name'      => $request->name,
-                'email'     => $request->email,
-                'password'  => $request->password ? Hash::make($request->password) : $user->password,
+                'name' => $request->name,
+                'email' => $request->email,
+                'password' => $request->password ? Hash::make($request->password) : $user->password,
             ]);
             $user->syncRoles($request->role);
             DB::commit();
-            return back()->with('success', $user->name. ' updated successfully.');
+
+            return back()->with('success', $user->name.' updated successfully.');
         } catch (\Throwable $th) {
             DB::rollback();
-            return back()->with('error', 'Error updating ' . $user->name . $th->getMessage());
+
+            return back()->with('error', 'Error updating '.$user->name.$th->getMessage());
         }
     }
 
@@ -101,10 +104,10 @@ class UserController extends Controller
     {
         try {
             $user->delete();
-            return back()->with('success', $user->name. ' deleted successfully.');
+
+            return back()->with('success', $user->name.' deleted successfully.');
         } catch (\Throwable $th) {
-            return back()->with('error', 'Error deleting ' . $user->name . $th->getMessage());
+            return back()->with('error', 'Error deleting '.$user->name.$th->getMessage());
         }
     }
-
 }

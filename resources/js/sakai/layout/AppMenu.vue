@@ -1,53 +1,110 @@
 <script setup>
-import { ref } from 'vue';
+import { ref } from "vue";
 
-import AppMenuItem from './AppMenuItem.vue';
+import AppMenuItem from "./AppMenuItem.vue";
 
 const model = ref([
     {
-        items: [{ label: 'Dashboard', icon: 'pi pi-fw pi-home', to: '/dashboard' }]
-    },  
-    {
-        // label: 'Master',
         items: [
-            { label: 'Rank', icon: 'pi pi-fw pi-users', to: '/rank', can:'read rank' },
-            { label: 'Position', icon: 'pi pi-fw pi-users', to: '/position', can:'read position' },
-            { label: 'Vessel', icon: 'pi pi-fw pi-users', to: '/vessel', can:'read vessel' },
-        ]
+            { label: "Dashboard", icon: "pi pi-fw pi-home", to: "/dashboard" },
+        ],
     },
     {
         // label: 'Master',
         items: [
-            { label: 'Sea Duty Record', icon: 'pi pi-fw pi-file', to: '/seaDutyRecords', can:'read sea_duty' },
-            { label: 'Document', icon: 'pi pi-fw pi-file', to: '/documents', can:'read document' },
-            { label: 'Training and Certification', icon: 'pi pi-fw pi-file', to: '/certificates', can:'read certificate' },
-            { label: 'User', icon: 'pi pi-fw pi-user', to: '/user', can:'read user' }
-        ]
-
+            {
+                label: "Rank",
+                icon: "pi pi-fw pi-users",
+                to: "/rank",
+                can: "read rank",
+            },
+            {
+                label: "Position",
+                icon: "pi pi-fw pi-users",
+                to: "/position",
+                can: "read position",
+            },
+            {
+                label: "Vessel",
+                icon: "pi pi-fw pi-users",
+                to: "/vessel",
+                can: "read vessel",
+            },
+        ],
+    },
+    {
+        // label: 'Master',
+        items: [
+            {
+                label: "Sea Duty Record",
+                icon: "pi pi-fw pi-file",
+                to: "/seaDutyRecords",
+                can: "read sea_duty",
+            },
+            {
+                label: "Document",
+                icon: "pi pi-fw pi-file",
+                to: "/documents",
+                can: "read document",
+            },
+            {
+                label: "Chips Report",
+                icon: "pi pi-fw pi-file",
+                to: "/chipsReports",
+                can: "read chipsReport",
+            },
+            {
+                label: "Training and Certification",
+                icon: "pi pi-fw pi-file",
+                to: "/certificates",
+                can: "read certificate",
+            },
+            {
+                label: "User",
+                icon: "pi pi-fw pi-user",
+                to: "/user",
+                can: "read user",
+            },
+        ],
     },
     {
         // label: 'Setting',
         items: [
-            { label: 'Role', icon: 'pi pi-fw pi-id-card', to: '/role', can:'read role' },
-            { label: 'Permission', icon: 'pi pi-fw pi-mobile', to: '/permission', class: 'rotated-icon', can:'read permission' },
-        ]
+            {
+                label: "Role",
+                icon: "pi pi-fw pi-id-card",
+                to: "/role",
+                can: "read role",
+            },
+            {
+                label: "Permission",
+                icon: "pi pi-fw pi-mobile",
+                to: "/permission",
+                class: "rotated-icon",
+                can: "read permission",
+            },
+        ],
     },
     {
         items: [
             {
-                label: 'Profile',
-                icon: 'pi pi-fw pi-user',
-                to: '/personal_data'
-            }
-        ]
-    }
+                label: "Profile",
+                icon: "pi pi-fw pi-user",
+                to: "/personal_data",
+            },
+        ],
+    },
 ]);
 </script>
 
 <template>
     <ul class="layout-menu">
         <template v-for="(item, i) in model" :key="item">
-            <app-menu-item v-if="!item.separator" :item="item" :index="i"></app-menu-item>
+            <app-menu-item
+                v-if="!item.separator"
+                :item="item"
+                :index="i"
+            ></app-menu-item>
             <li v-if="item.separator" class="menu-separator"></li>
         </template>
     </ul>

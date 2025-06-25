@@ -38,12 +38,12 @@ class AuthenticatedSessionController extends Controller
 
         if ($user->hasAnyRole(['superadmin', 'admin', 'operator'])) {
             return redirect()->intended(RouteServiceProvider::HOME);
-        }
-        else{
+        } else {
             $defaultTab = $user->default_tab_index ?? 0; // Default to first tab
 
             // Store the default tab preference in session
             session(['defaultTab' => $defaultTab]);
+
             return redirect()->intended(RouteServiceProvider::PROFILE);
         }
 
