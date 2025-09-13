@@ -22,7 +22,7 @@ class PermissionSeeder extends Seeder
         foreach ($resources as $resource) {
             foreach ($actions as $action) {
                 // Avoid unnecessary permissions (e.g. no create/read/update for profile)
-                if ($resource === 'profile' && $action !== 'delete') {
+                if ($resource === 'profile' && $action !== 'read') {
                     continue;
                 }
 

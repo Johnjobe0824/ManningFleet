@@ -177,7 +177,7 @@ function onFileSelect(event) {
                                         <div
                                             class="mt-1 ml-5 text-muted-color font-extrabold text-4xl"
                                         >
-                                            {{ personal_info.rank?.name }}
+                                            {{ personal_info?.rank?.name }}
                                             {{ personal_info?.first_name }}
                                             {{ personal_info?.middle_name }}
                                             {{ personal_info?.last_name }}
@@ -202,7 +202,7 @@ function onFileSelect(event) {
                                     <div
                                         class="mt-1 ml-5 text-muted-color text-xl"
                                     >
-                                        SRN: {{ personal_info.serial_no }}
+                                        SRN: {{ personal_info?.serial_no }}
                                     </div>
                                 </li>
                             </ul>

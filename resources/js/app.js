@@ -7,6 +7,8 @@ import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 import { ZiggyVue } from '../../vendor/tightenco/ziggy';
 
 import Aura from '@primevue/themes/aura';
+import Lara from '@primevue/themes/lara';
+import Nora from '@primevue/themes/nora';
 import PrimeVue from 'primevue/config';
 import ConfirmationService from 'primevue/confirmationservice';
 import ToastService from 'primevue/toastservice';
@@ -14,7 +16,7 @@ import ToastService from 'primevue/toastservice';
 import '@/sakai/assets/styles.scss';
 import '@/sakai/assets/tailwind.css';
 
-const appName = import.meta.env.VITE_APP_NAME || 'Sakai';
+const appName = import.meta.env.VITE_APP_NAME || 'CGFleet Manning System';
 
 createInertiaApp({
     title: (title) => `${title} - ${appName}`,
@@ -25,7 +27,7 @@ createInertiaApp({
             .use(ZiggyVue)
             .use(PrimeVue, {
                 theme: {
-                    preset: Aura,
+                    preset: Nora,
                     options: {
                         darkModeSelector: '.app-dark'
                     }
@@ -48,6 +50,6 @@ createInertiaApp({
             .mount(el);
     },
     progress: {
-        color: '#4B5563',
+        color: '#ff0000ff',
     },
 });

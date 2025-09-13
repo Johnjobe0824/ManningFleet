@@ -12,12 +12,12 @@ const props = defineProps({
     user:Object,
 });
 
-const personal_info = props.user.personal_info || {};
+const personal_info = props.user?.personal_info || {};
 
 const name = [
-  personal_info.rank?.name,
-  personal_info.first_name,
-  personal_info.last_name,
+  personal_info?.rank?.name,
+  personal_info?.first_name,
+  personal_info?.last_name,
   "PCG"
 ].filter(Boolean).join(' ');
 
