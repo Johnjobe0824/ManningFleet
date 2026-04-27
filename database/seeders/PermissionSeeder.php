@@ -13,8 +13,8 @@ class PermissionSeeder extends Seeder
     public function run(): void
     {
         $resources = [
-            'user', 'role', 'permission', 'rank', 'vessel',
-            'position', 'sea_duty', 'document', 'training', 'profile', 'chipsReport',
+            'user', 'role', 'permission', 'rank', 'vessel','junior_vessel_assignment', 'junior_higher_billet', 'completion_billet', 'slmc_endorsement',
+            'exo_deliberation', 'exo_reassign','position', 'sea_duty', 'document', 'training', 'profile', 'chipsReport',
         ];
 
         $actions = ['create', 'read', 'update', 'delete'];

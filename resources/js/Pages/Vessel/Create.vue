@@ -6,6 +6,7 @@ const props = defineProps({
     show: Boolean,
     title: String,
     permissions:Object,
+    craft_sizes: Array
 });
 
 const emit = defineEmits(["close"]);
@@ -26,15 +27,15 @@ const form = useForm({
 const categories = ref([
   {
     id: 1,
-    name: "Category I"
+    name: "Capital Ship"
   },
   {
     id: 2,
-    name: "Category II"
+    name: "Small Craft"
   },
   {
     id: 3,
-    name: "Category III"
+    name: "Small Boat"
   }
 ]);
 
@@ -161,7 +162,7 @@ watchEffect(() => {
                 <div class="flex flex-col gap-2">
                     <label for="size">Size</label>
                     <!-- <InputText id="type" v-model="form.type" class="flex-auto" autocomplete="off" placeholder="Type" />   -->
-                    <Select v-model="form.size" :options="sizes" optionLabel="name" optionValue="name" placeholder="Select size" />
+                    <Select v-model="form.size" :options="props.craft_sizes" optionLabel="code" optionValue="code" placeholder="Select size" />
                         <!-- <select
                         v-model="form.size"
                         id="id"

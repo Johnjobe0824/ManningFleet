@@ -145,4 +145,21 @@ class DocumentController extends Controller
             return back()->with('error', 'Error deleting document: '.$th->getMessage());
         }
     }
+
+    public function fetch(Request $request)
+{
+    $query = Document::query()
+        ->where('user_id', $request->user_id);
+
+    if ($request->filled('search')) {
+        $query->where(function ($q) use ($request) {
+            $q->where('name', 'LIKE', '%' . $request->search . '%')
+              ->orWhere('status', 'LIKE', '%' . $request->search . '%');
+        });
+    }
+
+    $perPage = $request->input('per_page', 10);
+
+    return response()->json($query->latest()->paginate($perPage));
+}
 }

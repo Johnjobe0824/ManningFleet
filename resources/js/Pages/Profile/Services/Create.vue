@@ -15,6 +15,7 @@ const props = defineProps({
     title: String,
     user: Object,
     vessels: Array,
+    positions: Object,
 });
 
 const user_id = props.user?.id;
@@ -22,10 +23,23 @@ const user_id = props.user?.id;
 const selectedVesselId = ref(null);
 const selectedPositionId = ref(null);
 
+// const filteredPositions = computed(() => {
+//   const vessel = props.vessels.find(v => v.id === selectedVesselId.value);
+//   return vessel?.assigned_positions ?? [];
+// });
+
+// const filteredPositions = computed(() => {
+//   const vessel = props.vessels.find(v => v.id === form.vessel_id);
+//   return vessel?.assigned_positions ?? [];
+// });
+
 const filteredPositions = computed(() => {
-  const vessel = props.vessels.find(v => v.id === selectedVesselId.value);
-  return vessel?.assigned_positions ?? [];
+  const vessel = props.vessels.find(v => v.id === form.vessel_id);
+  if (!vessel) return [];
+
+  return vessel.assigned_positions;
 });
+
 
 
 const emit = defineEmits(["close"]);
@@ -36,6 +50,7 @@ const form = useForm({
     position_id: null,
     date_from: "",
     date_to: "",
+    residency: "",
     authority: "",
     tst: "",
     tmc: "",
@@ -101,7 +116,7 @@ watchEffect(() => {
                     class="w-full"
                     />
                     <small v-if="form.errors.position_id" class="text-red-500">{{ form.errors.position_id }}</small>
-
+                            
                     </div>
 
 
@@ -127,6 +142,18 @@ watchEffect(() => {
                         class="w-full"
                     />
                     <small v-if="form.errors.date_to" class="text-red-500">{{ form.errors.date_to }}</small>
+                </div>
+
+                    <!-- Residency -->
+                <div class="flex flex-col gap-2">
+                    <label for="residency">Residency</label>
+                    <InputText
+                        id="residency"
+                        v-model="form.residency"
+                        class="w-full"
+                        placeholder="Enter Residency"
+                    />
+                    <small v-if="form.errors.residency" class="text-red-500">{{ form.errors.residency }}</small>
                 </div>
 
                 <!-- Authority -->

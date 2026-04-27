@@ -7,7 +7,7 @@ use App\Http\Requests\VesselStoreRequest;
 use App\Http\Requests\VesselUpdateRequest;
 use App\Models\Position;
 use App\Models\Vessel;
-use App\Models\VesselPosition;
+use App\Models\{VesselPosition, CraftSize};
 use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
 
@@ -40,10 +40,13 @@ class VesselController extends Controller
             $vessels->orderBy($request->field, $request->order);
         }
 
+        $craftSizes = CraftSize::all();
+
         return Inertia::render('Vessel/Index', [
             'title' => 'Vessel',
             'filters' => $request->all(['search', 'field', 'order']),
             'vessels' => $vessels->paginate(10),
+            'craft_sizes' => $craftSizes,
         ]);
     }
 

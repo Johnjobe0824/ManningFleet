@@ -9,35 +9,81 @@ import TabPanels from 'primevue/tabpanels';
 import TabPanel from 'primevue/tabpanel';
 
 import Certificates from "../Certificates/Certificates.vue";
+import Billet from "@/Pages/Billet/Index.vue";
+import JuniorHigherBillet from "@/Pages/JuniorHigherBillet/Juniorhigherbillet.vue";
+import CompletionBillet from "@/Pages/CompletionBillet/Completionbillet.vue";
+import SlmcEndorsement from "@/Pages/SlmcEndorsement/Slmcendorsement.vue";
+
+import Documents from "../Documents/Documents.vue";
+import Exodeliberation from "@/Pages/ExoDeliberation/Exodeliberation.vue";
+import ExoReassign from "@/Pages/ExoReassign/ExoReassignIndex.vue";
+import Category2Exo from "@/Pages/Category2Exo/Cat2exoIndex.vue";
+
 
 
 const props = defineProps({
     show: Boolean,
-    user: Object
+    user: Object,
+    // documents: Array, // ✅ Add documents prop
+
 });
 
 const user = usePage().props.auth.user;
 
 const emit = defineEmits(['close']);
 
-const tabs = [
+const tabs = computed(() => [
+    {
+    label: 'Billet Board',
+    component: Billet,
+    props: {
+        user: user
+    }
+  },
+
   {
-    label: 'Certificates',
-    component: Certificates
+    label: 'Promotion for Higher Billet',
+     component: JuniorHigherBillet,
+    props: {
+        user: user
+    }
   },
   {
-    label: 'Training/Schooling',
-    component: Certificates
+    label: 'Completion Billet',
+    component: CompletionBillet,
+    props: {
+        user: user
+    }
   },
   {
-    label: 'Assessment',
-    component: Certificates
+    label: 'SLMC Endorsements',
+    component: SlmcEndorsement,
+    props: {
+        user: user
+    }
   },
   {
-    label: 'Chips Report',
-    component: Certificates
+    label: 'Delibertion for Exo Billet',
+    component: Exodeliberation,
+    props: {
+        user: user
+    }
+  },
+   {
+    label: 'Exo Reassignment',
+    component:ExoReassign,
+    props: {
+        user: user
+    }
+  },
+  {
+    label: 'CAT 2 EXO',
+    component:Category2Exo,
+    props: {
+        user: user
+    }
   }
-]
+])
 
 // const activeTab = ref(0)
 const activeTab = ref(window.defaultTab || 0) // Set default tab based on session

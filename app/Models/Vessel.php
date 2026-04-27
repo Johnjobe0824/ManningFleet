@@ -10,12 +10,12 @@ class Vessel extends Model
 {
     use HasFactory, SoftDeletes;
 
-    const I = 'Category I';
+    const CAPITAL_SHIP = 'Capital Ship';
 
-    const II = 'Category II';
+    const SMALL_CRAFT = 'Small Craft';
 
-    const III = 'Category III';
-
+    const SMALL_BOAT = 'Small Boat';
+    
     const RFS = 'Ready For Sea';
 
     const NRFS = 'Not Ready For Sea';

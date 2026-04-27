@@ -125,6 +125,17 @@ const confirmStatusUpdate = (rowData) => {
   });
 };
 
+const formatDate = (date) => {
+    if (!date) return null;
+
+    const d = new Date(date);
+    return d.toLocaleDateString('en-US', {
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric'
+    });
+};
+
 const updateStatus = async (rowData) => {
   try {
     await axios.patch(route('seaDutyRecords.updateStatus', rowData.id), {
@@ -197,9 +208,12 @@ const updateStatus = async (rowData) => {
 
                 <Column header="Inclusive Dates">
                     <template #body="slotProps">
-                        {{ slotProps.data.date_from }} - {{ slotProps.data.date_to }}
+                        {{ formatDate(slotProps.data.date_from) }} -
+                        {{ slotProps.data.date_to ? formatDate(slotProps.data.date_to) : 'Present' }}
                     </template>
                 </Column>
+
+                <Column field="residency" header="Residency"></Column>
 
                 <Column field="authority" header="Authority"></Column>
 

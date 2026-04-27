@@ -22,7 +22,7 @@ class SeaDutyRecordIndexRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'field' => ['in:user_id,vessel_id,position_id,date_from,date_to,authority,tst,tmc,status,created_at,updated_at'],
+            'field' => ['in:user_id,vessel_id,position_id,date_from,date_to,residency,authority,tst,tmc,status,created_at,updated_at'],
             'order' => ['in:asc,desc'],
             'perPage' => ['numeric'],
         ];

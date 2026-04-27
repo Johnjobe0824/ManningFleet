@@ -18,6 +18,7 @@ return new class extends Migration
             $table->foreignId('position_id')->constrained()->onDelete('cascade');
             $table->date('date_from')->nullable();
             $table->date('date_to')->nullable();
+            $table->string('residency')->nullable();
             $table->string('authority')->nullable();
             $table->string('tst')->nullable();
             $table->string('tmc')->nullable();

@@ -9,8 +9,9 @@ import UpdateUserInformationForm from "../Profile/Partials/UpdateUserInformation
 
 import ServiceRecord from "../Profile/Services/ServiceRecord.vue";
 import Certificates from "../Profile/Certificates/Certificates.vue";
-import Documents from "../Profile/Documents/Documents.vue";
 import ChipReports from "../Profile/ChipReports/ChipReports.vue";
+import Contacts from "../Profile/Contacts/Contacts.vue";    
+import Documents from "../Profile/Documents/Documents.vue";
 
 import Profile from "./Profile/Index.vue";
 
@@ -29,6 +30,7 @@ const props = defineProps({
     ranks: Object,
     documents: Object,
     chipsReports: Object,
+    contacts: Object,
     certificates: Object,
     seaDutyRecords: Object,
     user: Object,
@@ -38,6 +40,7 @@ const props = defineProps({
 const emit = defineEmits(["close"]);
 
 const certificates = computed(() => usePage().props.certificates);
+const contacts = computed(() => usePage().props.contacts);
 const documents = computed(() => usePage().props.documents);
 const chipsReports = computed(() => usePage().props.chipsReports);
 const seaDutyRecords = computed(() => usePage().props.seaDutyRecords);
@@ -78,6 +81,10 @@ const tabs = computed(() => [
         label: "Chips Report",
         component: ChipReports,
         props: { chipsReports: chipsReports.value, user: user.value },
+    },
+        {
+        label: "Contact Us",
+        component: Contacts,
     },
 ]);
 

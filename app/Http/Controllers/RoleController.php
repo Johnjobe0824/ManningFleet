@@ -26,7 +26,10 @@ class RoleController extends Controller
         $roles = Role::query();
 
         // Exclude superadmin role from the query
-        $roles->where('name', '<>', 'superadmin');
+        if(!auth()->user()->hasRole('superadmin')){
+                $roles->where('name', '<>', 'superadmin');
+        }
+        // $roles->where('name', '<>', 'superadmin');
 
         if ($request->has('search')) {
             $roles->where('name', 'LIKE', '%'.$request->search.'%');

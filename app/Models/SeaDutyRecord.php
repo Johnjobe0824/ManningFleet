@@ -16,6 +16,7 @@ class SeaDutyRecord extends Model
         'position_id',
         'date_from',
         'date_to',
+        'residency',
         'authority',
         'tst',
         'tmc',
@@ -23,6 +24,15 @@ class SeaDutyRecord extends Model
         'is_active',
     ];
 
+
+          // ✅ ADD THIS
+    protected $casts = [
+        'date_from' => 'date',
+        'date_to' => 'date',
+        'is_active' => 'boolean',
+    ];
+
+    
     // Relationships
     public function user()
     {
@@ -38,4 +48,5 @@ class SeaDutyRecord extends Model
     {
         return $this->belongsTo(Position::class);
     }
+    
 }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\SeaDutyRecordIndexRequest;
 use App\Http\Requests\SeaDutyRecordStoreRequest;
 use App\Models\SeaDutyRecord;
+use App\Models\Position; 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
@@ -33,6 +34,7 @@ class SeaDutyRecordController extends Controller
 
             $seaDutyRecords->where(function ($query) use ($searchTerm) {
                 $query->where('authority', 'LIKE', "%{$searchTerm}%")
+                    ->orWhere('residency', 'LIKE', "%{$searchTerm}%")
                     ->orWhere('tst', 'LIKE', "%{$searchTerm}%")
                     ->orWhere('tmc', 'LIKE', "%{$searchTerm}%")
                     ->orWhere('date_to', 'LIKE', "%{$searchTerm}%")
@@ -48,10 +50,13 @@ class SeaDutyRecordController extends Controller
             $seaDutyRecords->orderBy($request->field, $request->order);
         }
 
+        $Position = Position::all();
+
         return Inertia::render('SeaDutyRecord/Index', [
             'title' => 'Sea Duty Record',
             'filters' => $request->all(['search', 'field', 'order']),
             'seaDutyRecords' => $seaDutyRecords->paginate(10),
+            'positions' => $Position,
         ]);
     }
 
@@ -76,7 +81,11 @@ class SeaDutyRecordController extends Controller
                 'vessel_id' => $request->vessel_id,
                 'position_id' => $request->position_id,
                 'date_from' => \Carbon\Carbon::parse($request->date_from)->format('Y-m-d'),
-                'date_to' => \Carbon\Carbon::parse($request->date_to)->format('Y-m-d'),
+                // ✅ Correct fix
+                'date_to' => $request->date_to
+                ? \Carbon\Carbon::parse($request->date_to)->format('Y-m-d')
+                : null,             
+                'residency' => $request->residency,
                 'authority' => $request->authority,
                 'tst' => $request->tst,
                 'tmc' => $request->tmc,
@@ -86,14 +95,12 @@ class SeaDutyRecordController extends Controller
 
             DB::commit();
 
-            return back()->with('success', 'Sea Duty Record added successfully.');
-        } catch (\Throwable $th) {
-            DB::rollBack();
+             return redirect()->back()->with('success', 'Sea Duty Record added successfully.');
+    } catch (\Throwable $th) {
+        DB::rollBack();
 
-            return response()->json([
-                'message' => 'Error creating sea duty record: '.$th->getMessage(),
-            ], 500);
-        }
+        return redirect()->back()->with('error', 'Failed to create sea duty record.');
+    }
     }
 
     /**

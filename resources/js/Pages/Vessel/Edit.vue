@@ -68,15 +68,15 @@ watchEffect(() => {
 const categories = ref([
   {
     id: 1,
-    name: "Category I"
+    name: "Capital Ship"
   },
   {
     id: 2,
-    name: "Category II"
+    name: "Small Craft"
   },
   {
     id: 3,
-    name: "Category III"
+    name: "Small Boat"
   }
 ]);
 

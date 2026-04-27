@@ -25,11 +25,58 @@ const model = ref([
                 can: "read position",
             },
             {
+                label: "Craft Size",
+                icon: "pi pi-fw pi-users",
+                to: "/craft_size",
+                can: "read craft_size",
+            },
+            {
                 label: "Vessel",
                 icon: "pi pi-fw pi-users",
                 to: "/vessel",
                 can: "read vessel",
             },
+            {
+                label: "Junior Vessel Assignment",
+                icon: "pi pi-fw pi-shield",
+                to: "/juniorVesselAssignments/admin",
+                can: "read junior_vessel_assignment",  // or whatever admin permission you use
+            },
+
+            {
+                label: "Junior Higher Billet",
+                icon: "pi pi-fw pi-shield",
+                to: "/juniorHigherBillets/admin",
+                can: "read junior_higher_billet",  // or whatever admin permission you use
+            },
+                {
+                    label: "Completion Billet",
+                    icon: "pi pi-fw pi-shield",
+                    to: "/completionBillets/admin",
+                    can: "read completion_billet",  // or whatever admin permission you use
+                },
+                {
+                    label: "SLMC Endorsement",
+                    icon: "pi pi-fw pi-shield",
+                    to: "/slmcEndorsements/admin",
+                    can: "read slmc_endorsement",  // or whatever admin permission you use
+                },
+                {
+                    label: "Deliberation for Exo Billet",
+                    icon: "pi pi-fw pi-shield",
+                    to: "/exoDeliberations/admin",
+                    can: "read exo_deliberation",  // or whatever admin permission you use
+                },
+                {
+                    label: "Exo Reassignment",
+                    icon: "pi pi-fw pi-shield",
+                    to: "/exoReassignments/admin",
+                    can: "read exo_reassign",  // or whatever admin permission you use
+                },
+        
+        
+            
+                
         ],
     },
     {

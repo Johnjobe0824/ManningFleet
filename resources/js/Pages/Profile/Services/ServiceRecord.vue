@@ -21,10 +21,21 @@ const props = defineProps({
     ranks: Object,
     seaDutyRecords: Array,
     vessels: Array,
+    positions: Object,
 });
 
 const user = usePage().props.auth.user;
 
+const formatDate = (date) => {
+    if (!date) return null;
+
+    const d = new Date(date);
+    return d.toLocaleDateString('en-US', {
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric'
+    });
+};
 
 const statusSeverity = (status) => {
   switch (status) {
@@ -105,9 +116,11 @@ const title = 'Sea Duty Record';
 
                 <Column header="Inclusive Dates">
                     <template #body="slotProps">
-                        {{ slotProps.data.date_from }} - {{ slotProps.data.date_to }}
+                        {{ formatDate(slotProps.data.date_from) }} -
+                        {{ slotProps.data.date_to ? formatDate(slotProps.data.date_to) : 'Present' }}
                     </template>
                 </Column>
+                <Column field="residency" header="Residency"></Column>
                 <Column field="authority" header="Authority"></Column>
                 <Column field="tst" header="Total Steaming Time"></Column>
                 <Column field="tmc" header="Total Miles Covered"></Column>

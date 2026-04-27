@@ -16,6 +16,7 @@ const props = defineProps({
     filters: Object,
     // permissions: Object,
     vessels: Object,
+    craft_sizes: Array,
     perPage: Number,
 });
 
@@ -28,6 +29,7 @@ const permissionDialog = ref(false);
 const form = useForm({});
 
 console.log('vessels ', props.vessels);
+console.log('craft_sizes ', props.craft_sizes);
 
 const data = reactive({
     params: {
@@ -117,6 +119,7 @@ watch(
                 @close="data.createOpen = false"
                 :title="props.title"
                 :permissions="props.permissions"
+                :craft_sizes="props.craft_sizes"
             />
             <Edit
                 :show="data.editOpen"
@@ -183,7 +186,7 @@ watch(
                         <DataTable :value="slotProps.data.assigned_positions">
                             <Column field="position.name" header="Position"></Column>
                             <Column field="position.code" header="Code"></Column>
-                            <Column field="status" header="Status" sortable>
+                              <Column field="status" header="Status" sortable>
                                 <template #body="slotProps">
                                     <Tag :value="slotProps.data.status.toLowerCase()" :severity="getOrderSeverity(slotProps.data)" />
                                 </template>

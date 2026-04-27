@@ -109,8 +109,8 @@ watch(
                     </template>
                 </Column>
 
-                <Column field="name" header="Name"></Column>
                 <Column field="code" header="Code"></Column>
+                <Column field="name" header="Name"></Column>
                 <Column :exportable="false" style="min-width: 12rem">
                     <template #body="slotProps">
                         <Button v-show="can(['update position'])" icon="pi pi-pencil" outlined rounded class="mr-2"  @click="

@@ -16,7 +16,7 @@ return new class extends Migration
             $table->id();
             $table->string('vessel_name');
             $table->string('vessel_bow_no')->unique();
-            $table->enum('category', [Vessel::I, Vessel::II, Vessel::III])->default(Vessel::I);
+            $table->string('category')->default(Vessel::SMALL_CRAFT);
             $table->enum('status', [Vessel::RFS, Vessel::NRFS])->default(Vessel::NRFS);
             $table->string('size');
             $table->softDeletes();
