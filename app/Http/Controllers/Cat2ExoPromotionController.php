@@ -16,13 +16,13 @@ class Cat2ExoPromotionController extends Controller
     /* ============================================================
        CONSTRUCTOR — permission middleware
     ============================================================ */
-    // public function __construct()
-    // {
-    //     $this->middleware('permission:read cat2_exo',   ['only' => ['index', 'fetch', 'adminIndex']]);
-    //     $this->middleware('permission:create cat2_exo', ['only' => ['store']]);
-    //     $this->middleware('permission:update cat2_exo', ['only' => ['updateStatus']]);
-    //     $this->middleware('permission:delete cat2_exo', ['only' => ['destroy']]);
-    // }
+    public function __construct()
+    {
+        $this->middleware('permission:read cat2_exo',   ['only' => ['index', 'fetch', 'adminIndex']]);
+        $this->middleware('permission:create cat2_exo', ['only' => ['store']]);
+        $this->middleware('permission:update cat2_exo', ['only' => ['updateStatus']]);
+        $this->middleware('permission:delete cat2_exo', ['only' => ['destroy']]);
+    }
 
     /* ============================================================
        INDEX — dropdown data for the form
@@ -217,7 +217,7 @@ class Cat2ExoPromotionController extends Controller
             return response()->json($paginated);
         }
 
-        return Inertia::render('Cat2ExoPromotion/AdminIndex', [
+        return Inertia::render('Category2Exo/Cat2exoAdmin', [
             'title'            => 'CAT 2 EXO Promotion — Admin',
             'filters'          => $request->only(['search', 'status']),
             'cat2ExoPromotions' => $paginated,
