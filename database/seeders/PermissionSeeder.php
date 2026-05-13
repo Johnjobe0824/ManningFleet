@@ -14,7 +14,7 @@ class PermissionSeeder extends Seeder
     {
         $resources = [
             'user', 'role', 'permission', 'rank', 'vessel','junior_vessel_assignment', 'junior_higher_billet', 'completion_billet', 'slmc_endorsement',
-            'exo_deliberation', 'cat2ExoPromotion', 'exo_reassign','position', 'sea_duty', 'document', 'training', 'profile', 'chipsReport',
+            'exo_deliberation', 'cat2ExoPromotion', 'cat3ExoPromotion', 'exo_icas', 'cat2CoPromotionReassign', 'exo_reassign','position', 'sea_duty', 'document', 'training', 'profile', 'chipsReport',
         ];
 
         $actions = ['create', 'read', 'update', 'delete'];

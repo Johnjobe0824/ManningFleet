@@ -18,6 +18,11 @@ import Documents from "../Documents/Documents.vue";
 import Exodeliberation from "@/Pages/ExoDeliberation/Exodeliberation.vue";
 import ExoReassign from "@/Pages/ExoReassign/ExoReassignIndex.vue";
 import Category2Exo from "@/Pages/Category2Exo/Cat2exoIndex.vue";
+import Category3Exo from "@/Pages/Category3Exo/Cat3exoIndex.vue";
+import ExoIcascompletion from "@/Pages/ExoIcascompletion/ExoIcascompletion.vue";
+import Category2Co from "@/Pages/Category2Co/Cat2CoIndex.vue";
+
+
 
 
 
@@ -82,7 +87,36 @@ const tabs = computed(() => [
     props: {
         user: user
     }
+  },
+
+  {
+    label: 'CAT 3 EXO',
+    component:Category3Exo,
+    props: {
+        user: user
+    }
+  },
+
+  {
+    label: 'EXO, ICAS completion',
+    component:ExoIcascompletion,
+    props: {
+        user: user
+    }
+  },
+
+  {
+    label: 'CAT 2 CO',
+    component:Category2Co,
+    props: {
+        user: user
+    }
   }
+
+
+  
+ 
+
 ])
 
 // const activeTab = ref(0)

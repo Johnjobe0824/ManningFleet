@@ -23,6 +23,10 @@ use App\Http\Controllers\{
     ExoDeliberationController,  
     ExoReassignController,
     Cat2ExoPromotionController,
+    Cat3ExoPromotionController,
+    ExoIcasCompletionController,
+    Cat2CoPromotionReassignController,
+    
 
 };
 use App\Models\User;
@@ -162,28 +166,40 @@ Route::middleware('auth', 'verified')->group(function () {
 
 
     // ✅ Static routes FIRST
-Route::get('/cat2ExoPromotions/fetch', [Cat2ExoPromotionController::class, 'fetch'])
-     ->name('cat2ExoPromotions.fetch');
- 
-Route::get('/cat2ExoPromotions/admin', [Cat2ExoPromotionController::class, 'adminIndex'])
-     ->name('cat2ExoPromotions.adminIndex');
- 
-// ✅ Base routes
-Route::get('/cat2ExoPromotions',  [Cat2ExoPromotionController::class, 'index'])
-     ->name('cat2ExoPromotions.index');
- 
-Route::post('/cat2ExoPromotions', [Cat2ExoPromotionController::class, 'store'])
-     ->name('cat2ExoPromotions.store');
- 
-// ✅ Wildcard routes LAST
-Route::patch('/cat2ExoPromotions/{cat2ExoPromotion}/status', [Cat2ExoPromotionController::class, 'updateStatus'])
-     ->name('cat2ExoPromotions.updateStatus');
- 
-Route::delete('/cat2ExoPromotions/{cat2ExoPromotion}', [Cat2ExoPromotionController::class, 'destroy'])
-     ->name('cat2ExoPromotions.destroy');
- 
-
+    Route::get('/cat2ExoPromotions/fetch', [Cat2ExoPromotionController::class, 'fetch']) ->name('cat2ExoPromotions.fetch');
+    Route::get('/cat2ExoPromotions/admin', [Cat2ExoPromotionController::class, 'adminIndex'])->name('cat2ExoPromotions.adminIndex');
+    Route::get('/cat2ExoPromotions',  [Cat2ExoPromotionController::class, 'index'])->name('cat2ExoPromotions.index');
+    Route::post('/cat2ExoPromotions', [Cat2ExoPromotionController::class, 'store'])->name('cat2ExoPromotions.store');
+    Route::patch('/cat2ExoPromotions/{cat2ExoPromotion}/status', [Cat2ExoPromotionController::class, 'updateStatus'])->name('cat2ExoPromotions.updateStatus');
+    Route::delete('/cat2ExoPromotions/{cat2ExoPromotion}', [Cat2ExoPromotionController::class, 'destroy'])->name('cat2ExoPromotions.destroy');
     
+
+    Route::get('/cat3ExoPromotions/fetch', [Cat3ExoPromotionController::class, 'fetch'])->name('cat3ExoPromotions.fetch');
+    Route::get('/cat3ExoPromotions/admin', [Cat3ExoPromotionController::class, 'adminIndex'])->name('cat3ExoPromotions.adminIndex');
+    Route::get('/cat3ExoPromotions', [Cat3ExoPromotionController::class, 'index'])->name('cat3ExoPromotions.index');
+    Route::post('/cat3ExoPromotions', [Cat3ExoPromotionController::class, 'store'])->name('cat3ExoPromotions.store');
+    Route::patch('/cat3ExoPromotions/{cat3ExoPromotion}/status',  [Cat3ExoPromotionController::class,'updateStatus']) ->name('cat3ExoPromotions.updateStatus');
+    Route::delete('/cat3ExoPromotions/{cat3ExoPromotion}',[Cat3ExoPromotionController::class,'destroy'])->name('cat3ExoPromotions.destroy');
+
+
+    Route::get('/exoIcasCompletions/fetch',[ExoIcasCompletionController::class,'fetch'])->name('exoIcasCompletions.fetch');
+    Route::get('/exoIcasCompletions/admin',[ExoIcasCompletionController::class,'adminIndex'])->name('exoIcasCompletions.adminIndex');
+    Route::get('/exoIcasCompletions',[ExoIcasCompletionController::class, 'index'])->name('exoIcasCompletions.index');
+    Route::post('/exoIcasCompletions',[ExoIcasCompletionController::class, 'store'])->name('exoIcasCompletions.store');
+    Route::patch('/exoIcasCompletions/{exoIcasCompletion}/status',[ExoIcasCompletionController::class,'updateStatus'])->name('exoIcasCompletions.updateStatus');
+    Route::delete('/exoIcasCompletions/{exoIcasCompletion}',[ExoIcasCompletionController::class, 'destroy'])->name('exoIcasCompletions.destroy');
+
+   Route::get('/cat2CoPromotionReassigns/fetch',[Cat2CoPromotionReassignController::class,'fetch'])->name('cat2CoPromotionReassigns.fetch');
+    Route::get('/cat2CoPromotionReassigns/admin',[Cat2CoPromotionReassignController::class,'adminIndex'])->name('cat2CoPromotionReassigns.adminIndex');
+    Route::get('/cat2CoPromotionReassigns',[Cat2CoPromotionReassignController::class,'index'])->name('cat2CoPromotionReassigns.index');
+    Route::post('/cat2CoPromotionReassigns',[Cat2CoPromotionReassignController::class,'store'])->name('cat2CoPromotionReassigns.store');
+    Route::patch('/cat2CoPromotionReassigns/{cat2CoPromotionReassign}/status',[Cat2CoPromotionReassignController::class,'updateStatus'])->name('cat2CoPromotionReassigns.updateStatus');
+    Route::delete('/cat2CoPromotionReassigns/{cat2CoPromotionReassign}',[Cat2CoPromotionReassignController::class,'destroy'])->name('cat2CoPromotionReassigns.destroy');
+        
+    
+
+
+
     Route::get('/personal_data', function () {
         return Inertia::render('Personnel/Index');
     });

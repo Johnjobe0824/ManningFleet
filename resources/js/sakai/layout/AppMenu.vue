@@ -73,11 +73,23 @@ const model = ref([
                     to: "/exoReassignments/admin",
                     can: "read exo_reassign",  // or whatever admin permission you use
                 },
-        {
+                {
                     label: "Cat2 Executive Officer",
                     icon: "pi pi-fw pi-shield",
                     to: "/cat2ExoPromotions/admin",
                     can: "read cat2_exo",  // or whatever admin permission you use
+                },
+                {
+                    label: "Cat3 Executive Officer",
+                    icon: "pi pi-fw pi-shield",
+                    to: "/cat3ExoPromotions/admin",
+                    can: "read cat3_exo",  // or whatever admin permission you use
+                },
+                {
+                    label: "EXO, ICAS completion",
+                    icon: "pi pi-fw pi-shield",
+                    to: "/exoIcasCompletions/admin",
+                    can: "read exo_icas",  // or whatever admin permission you use
                 },
         
             
